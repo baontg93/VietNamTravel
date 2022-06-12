@@ -6,8 +6,9 @@ public class FriendListScreen : BaseScreen
     public Transform PrefabItem;
     public Transform ListContainer;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         UpdateData(Random());
     }
 
@@ -21,6 +22,7 @@ public class FriendListScreen : BaseScreen
         {
             Transform tf = EZ_Pooling.EZ_PoolManager.Spawn(PrefabItem);
             tf.SetParent(ListContainer);
+            tf.localScale = Vector3.one;
             FriendItem friendItem = tf.GetComponent<FriendItem>();
             friendItem.UpdateData(item);
         }

@@ -8,58 +8,58 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/DemoMenu.unity
     guid: da59bc017da8c40aba71c41ff276f950
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/AddressBookDemo.unity
     guid: f83c8baad6de242df98e3012ab452054
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/AlertDialogDemo.unity
     guid: 7ed715b7cf82d41d8b86fec32e244127
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/BillingServicesDemo.unity
     guid: a74e560ee387b496e80823cef4e7c118
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/CloudServicesDemo.unity
     guid: f1d5f4f628d4d47c0af716db3baf242f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/DatePickerDemo.unity
     guid: 2e381fcec245947308b45288300bab9f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/GameServicesDemo.unity
     guid: f002499860b3e4a7f950aa7c6580edd4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/MailComposerDemo.unity
     guid: 2bcdd828690f948a2b4063c203217b94
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/MediaServicesDemo.unity
     guid: ec02001bcc2b04074b0ba9b48befacd2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/MessageComposerDemo.unity
     guid: 4cc062bb976b6447e9bb1c6b7f7fb520
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/NetworkServicesDemo.unity
     guid: d14012fab82bc42e6bdf3464bebf0e63
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/NotificationServicesDemo.unity
     guid: 9f426002b5b2b42de9d7a86dfd50b75f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/RateMyAppDemo.unity
     guid: 08ed5e4259af342f1900b754aadff0e9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/ShareSheetDemo.unity
     guid: 688613dba58dd4334a08cbfbab78d92b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/SocialShareComposerDemo.unity
     guid: e98b4d92b889d4260a2a4b36f1e0b1c0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/UtilitiesDemo.unity
     guid: 13afb6d6e6ccc40298c9b382537e2a56
-  - enabled: 1
+  - enabled: 0
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/WebViewDemo.unity
     guid: d44fabeb85e3b420b898c585b5b5d502
-  - enabled: 1
-    path: Assets/LocationManagerIOS/Scene/DemoSceneLocation.unity
-    guid: 7cea11d8567814162a0dacd947df57d6
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

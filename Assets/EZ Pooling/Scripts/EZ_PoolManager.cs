@@ -85,6 +85,7 @@ namespace EZ_Pooling
                 for (var j = 0; j < item.instancesToPreload; ++j)
                 {
                     var newTransform = GameObject.Instantiate(prefabTransform, Vector3.zero, prefabTransform.rotation) as Transform;
+                    newTransform.localScale = prefabTransform.localScale;
                     newTransform.name = name;
                     newTransform.SetParent(parentTransform);
                     newTransform.gameObject.SetActive(false);
@@ -179,6 +180,7 @@ namespace EZ_Pooling
             {
                 var newTransform = GameObject.Instantiate(transToSpawn, Vector3.zero, transToSpawn.rotation) as Transform;
                 newTransform.name = transToSpawn.name;
+                newTransform.localScale = transToSpawn.localScale;
                 newTransform.SetParent(parentTransform);
 
                 return newTransform;
