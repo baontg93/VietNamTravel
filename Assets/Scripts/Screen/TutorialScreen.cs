@@ -1,35 +1,26 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public class TutorialScreen : MonoBehaviour
+public class TutorialScreen : BaseScreen
 {
-    public GameObject Content;
-    public Button buttonFinished;
-
-    void Start()
+    public bool CheckCacheAndOpen()
     {
         bool isFinished = PlayerPrefs.GetString("TutorialScreen_Finished", "false") == "true";
         if (!isFinished)
         {
             Show();
-            buttonFinished.onClick.AddListener(() =>
-            {
-                PlayerPrefs.SetString("TutorialScreen_Finished", "true");
-                Hide();
-            });
-        } else
+        }
+        else
         {
             Hide();
+            return false;
         }
+
+        return true;
     }
 
-    public void Show()
+    public override void Hide()
     {
-        Content.SetActive(true);
-    }
-
-    public void Hide()
-    {
-        Content.SetActive(false);
+        PlayerPrefs.SetString("TutorialScreen_Finished", "true");
+        base.Hide();
     }
 }
