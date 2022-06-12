@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/DemoMenu.unity
     guid: da59bc017da8c40aba71c41ff276f950
   - enabled: 1
@@ -56,4 +59,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Plugins/VoxelBusters/EssentialKit/Demo/Scenes/WebViewDemo.unity
     guid: d44fabeb85e3b420b898c585b5b5d502
+  - enabled: 1
+    path: Assets/LocationManagerIOS/Scene/DemoSceneLocation.unity
+    guid: 7cea11d8567814162a0dacd947df57d6
   m_configObjects: {}
