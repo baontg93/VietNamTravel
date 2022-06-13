@@ -33,9 +33,9 @@ public class LocationManager : MonoBehaviour
             {
                 for (int i = 1; i < values.Length; i++)
                 {
-                    if (values[i] != "null" && values[i] != null)
+                    if (values[i] != null && !values[i].Contains("null"))
                     {
-                        finalMsg += values[i].ToLower() + " ";
+                        finalMsg += values[i] + " - ";
                     }
                 }
                 Address = finalMsg;
@@ -49,6 +49,7 @@ public class LocationManager : MonoBehaviour
                     finalMsg += values[i];
                 }
                 location = finalMsg;
+                LocationManagerBridge.getAddressForCurrentLocation();
             }
         }
 
@@ -76,7 +77,6 @@ public class LocationManager : MonoBehaviour
             case 3: //"Authorized Always"
             case 4: //"Authorized When In Use"
                 LocationManagerBridge.startLocationMonitoring();
-                LocationManagerBridge.getAddressForCurrentLocation();
                 break;
             default:
                 Debug.Log("Location OK");

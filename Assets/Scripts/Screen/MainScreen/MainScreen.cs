@@ -53,6 +53,7 @@ public class MainScreen : MonoBehaviour
 
     public void OnProvinceUnlocked(string provine)
     {
+        OpenMap();
         congratScreen.SetProvinceName(provine);
         congratScreen.Show();
 
