@@ -10,7 +10,7 @@ namespace VoxelBusters.EssentialKit
         public static event Action<INotification> OnNotificationReceived = delegate { };
         
         // Start is called before the first frame update
-        void Start()
+        public void CheckPermission()
         {
             if (!NotificationServices.IsPermissionAvailable())
             {

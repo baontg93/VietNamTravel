@@ -9,23 +9,22 @@ public class LocationManager : MonoBehaviour
     string msgReceivingMethodName;
 
     string location;
+    public string Province;
     public string Address;
+    private bool ischecked = false;
 
-    public Action<string> OnLocation_Updated = delegate { };
+    public Action<string, string> OnLocation_Updated = delegate { };
 
     void Start()
     {
-        Dictionary<string[], string> provinces = new()
-        {
-            { new string[] {}, ""},
-        };
         msgReceivingGameObjectName = "LocationManager";
         msgReceivingMethodName = "SetLocationCallbackMessage";
-        CheckStatus();
+        SetCallback();
     }
 
     public void SetLocationCallbackMessage(string messageTemp)
     {
+        Debug.Log("messageTemp " + messageTemp);
         string[] values = messageTemp.Split('/');
         if (values.Length > 1)
         {
@@ -39,8 +38,9 @@ public class LocationManager : MonoBehaviour
                         finalMsg += values[i].ToLower() + " ";
                     }
                 }
-                Address = ProvincesParser.GetProvince(finalMsg);
-                OnLocation_Updated?.Invoke(Address);
+                Address = finalMsg;
+                Province = ProvincesParser.GetProvince(finalMsg);
+                OnLocation_Updated?.Invoke(Address, Province);
             }
             else if (values[0] == "Location")
             {
@@ -61,6 +61,7 @@ public class LocationManager : MonoBehaviour
 
     public void CheckStatus()
     {
+        ischecked = true;
 #if !UNITY_EDITOR
         int temp = LocationManagerBridge.getAuthrizationLevelForApplication();
         switch (temp)
@@ -74,8 +75,8 @@ public class LocationManager : MonoBehaviour
                 break;
             case 3: //"Authorized Always"
             case 4: //"Authorized When In Use"
-                SetCallback();
                 LocationManagerBridge.startLocationMonitoring();
+                LocationManagerBridge.getAddressForCurrentLocation();
                 break;
             default:
                 Debug.Log("Location OK");
@@ -96,7 +97,7 @@ public class LocationManager : MonoBehaviour
 
     private void OnApplicationFocus(bool focus)
     {
-        if (focus)
+        if (focus && ischecked)
         {
             CheckStatus();
         }

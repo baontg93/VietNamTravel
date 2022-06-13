@@ -7,7 +7,7 @@ public class MapScreen : BaseScreen
     public GameObject Map;
 
     public TextMeshProUGUI AddressText;
-
+    public TextMeshProUGUI ProvinceText;
 
     public Action<string> OnProvinceUnlocked = delegate { };
 
@@ -19,15 +19,17 @@ public class MapScreen : BaseScreen
         locationManager.OnLocation_Updated += OnLocation_Updated;
     }
 
-    private void OnLocation_Updated(string province)
+    private void OnLocation_Updated(string adrress, string province)
     {
-        AddressText.text = province;
+        AddressText.text = adrress;
+        ProvinceText.text = province;
     }
 
     public override void Show()
     {
         base.Show();
         Map.SetActive(true);
+        locationManager.CheckStatus();
     }
 
     public override void Hide()
