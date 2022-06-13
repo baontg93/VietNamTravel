@@ -49,7 +49,9 @@ public class LocationManager : MonoBehaviour
                     finalMsg += values[i];
                 }
                 location = finalMsg;
+#if !UNITY_EDITOR
                 LocationManagerBridge.getAddressForCurrentLocation();
+#endif
             }
         }
 
@@ -57,7 +59,9 @@ public class LocationManager : MonoBehaviour
 
     void SetCallback()
     {
+#if !UNITY_EDITOR
         LocationManagerBridge.setMessageReceivingObjectName(msgReceivingGameObjectName, msgReceivingMethodName);
+#endif
     }
 
     public void CheckStatus()
