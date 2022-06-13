@@ -1,20 +1,24 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class LocationManager : MonoBehaviour
 {
-    public TextMeshProUGUI Address;
     string msgReceivingGameObjectName;
     string msgReceivingMethodName;
 
     string location;
-    string address;
+    public string Address;
 
     public Action<string> OnLocation_Updated = delegate { };
 
     void Start()
     {
+        Dictionary<string[], string> provinces = new()
+        {
+            { new string[] {}, ""},
+        };
         msgReceivingGameObjectName = "LocationManager";
         msgReceivingMethodName = "SetLocationCallbackMessage";
         CheckStatus();
@@ -30,11 +34,13 @@ public class LocationManager : MonoBehaviour
             {
                 for (int i = 1; i < values.Length; i++)
                 {
-                    finalMsg += values[i];
+                    if (values[i] != "null" && values[i] != null)
+                    {
+                        finalMsg += values[i].ToLower() + " ";
+                    }
                 }
-                address = finalMsg;
-                Address.text = address;
-                OnLocation_Updated?.Invoke(address);
+                Address = ProvincesParser.GetProvince(finalMsg);
+                OnLocation_Updated?.Invoke(Address);
             }
             else if (values[0] == "Location")
             {

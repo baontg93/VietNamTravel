@@ -1,22 +1,33 @@
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MainScreen : MonoBehaviour
 {
-    public UserInfo userInfo;
-    public TutorialScreen tutorialScreen;
-    public FriendListScreen friendListScreen;
-    public MapScreen mapScreen;
-    public UserCollectDataScreen userCollectDataScreen;
+    [SerializeField] private UserInfo userInfo;
+    [SerializeField] private TutorialScreen tutorialScreen;
+    [SerializeField] private FriendListScreen friendListScreen;
+    [SerializeField] private MapScreen mapScreen;
+    [SerializeField] private UserCollectDataScreen userCollectDataScreen;
+    [SerializeField] private CongratScreen congratScreen;
+
+    private List<string> unlockedProvines = new();
 
     void Start()
     {
+        string json = PlayerPrefs.GetString("MainScreen_unlockedProvines");
+        if (!string.IsNullOrEmpty(json))
+        {
+            unlockedProvines = JsonConvert.DeserializeObject<List<string>>(json);
+        }
         UserData userData = new();
         userData.Name = PlayerPrefs.GetString("MainScreen_name", "Unknown");
         userData.Avatar = "avatar_1";
         userInfo.UpdateData(userData);
-        tutorialScreen.OnHiden += CheckAndOpenUserData;
+        tutorialScreen.OnHiden += OnTutorialHiden;
         userCollectDataScreen.OnSubmit += OnNameSubmited;
+        mapScreen.OnProvinceUnlocked += OnProvinceUnlocked;
 
         if (!tutorialScreen.CheckCacheAndOpen())
         {
@@ -28,12 +39,26 @@ public class MainScreen : MonoBehaviour
     {
         PlayerPrefs.SetString("MainScreen_name", name);
         userInfo.UpdateName(name);
+        if (unlockedProvines.Count == 0)
+        {
+            mapScreen.UnlockFirstProvince();
+        }
     }
 
-    private void CheckAndOpenUserData()
+    private void OnTutorialHiden()
     {
-        tutorialScreen.OnHiden -= CheckAndOpenUserData;
+        tutorialScreen.OnHiden -= OnTutorialHiden;
         userCollectDataScreen.CheckCacheAndOpen();
+    }
+
+    public void OnProvinceUnlocked(string provine)
+    {
+        congratScreen.SetProvinceName(provine);
+        congratScreen.Show();
+
+        unlockedProvines.Add(provine);
+        string json = JsonConvert.SerializeObject(unlockedProvines);
+        PlayerPrefs.SetString("MainScreen_unlockedProvines", json);
     }
 
     public void ClearPlayerPrefs()
