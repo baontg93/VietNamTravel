@@ -71,7 +71,7 @@ MonoBehaviour:
     m_isEnabled: 1
     m_defaultImage: {fileID: 0}
   m_nativeUISettings:
-    m_isEnabled: 1
+    m_isEnabled: 0
     m_customUICollection:
       m_rendererPrefab: {fileID: 114882653979984282, guid: ee1dcec1533844bc19c19281b8d148b6, type: 3}
       m_alertDialogPrefab: {fileID: 114719650402599042, guid: 0bea496bdcd2d41ebb1104db0fd905dc, type: 3}
@@ -116,7 +116,7 @@ MonoBehaviour:
       m_timeOutPeriod: 60
       m_port: 53
   m_webViewSettings:
-    m_isEnabled: 1
+    m_isEnabled: 0
     m_androidProperties:
       m_usesCamera: 0
       m_usesMicrophone: 0
