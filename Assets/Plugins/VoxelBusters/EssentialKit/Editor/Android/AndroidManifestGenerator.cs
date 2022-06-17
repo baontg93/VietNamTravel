@@ -1,4 +1,4 @@
-﻿#if UNITY_ANDROID
+#if UNITY_ANDROID
 using System.Xml;
 using VoxelBusters.CoreLibrary;
 
@@ -348,6 +348,11 @@ namespace VoxelBusters.EssentialKit.Editor.Android
                     permission.AddAttribute("android:maxSdkVersion", "18");
 
                 manifest.Add(permission);
+
+                /*
+                permission = new Permission();
+                permission.AddAttribute("android:name", "android.permission.SCHEDULE_EXACT_ALARM");
+                manifest.Add(permission);*/
             }
 
             if (settings.MediaServicesSettings.IsEnabled && settings.MediaServicesSettings.SavesFilesToGallery)

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UserInfo : MonoBehaviour
+public class UserInfo : SingletonBehaviour<UserInfo>
 {
     public Image Avatar;
     public TextMeshProUGUI Name;

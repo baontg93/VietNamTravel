@@ -9,7 +9,7 @@ public class MainScreen : MonoBehaviour
     [SerializeField] private TutorialScreen tutorialScreen;
     [SerializeField] private FriendListScreen friendListScreen;
     [SerializeField] private MapScreen mapScreen;
-    [SerializeField] private UserCollectDataScreen userCollectDataScreen;
+    [SerializeField] private AccountScreen userCollectDataScreen;
     [SerializeField] private CongratScreen congratScreen;
 
     private List<string> unlockedProvines = new();

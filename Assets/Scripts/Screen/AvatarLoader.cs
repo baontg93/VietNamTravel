@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 public class AvatarLoader : SingletonBehaviour<AvatarLoader>
 {
     public Sprite[] ListAvatar;
+    public MediaPicker mediaPicker;
 
     public Sprite GetAvatar(string name)
     {
@@ -14,5 +16,10 @@ public class AvatarLoader : SingletonBehaviour<AvatarLoader>
             }
         }
         return null;
+    }
+
+    public void SelectAvatar(Action<Sprite> onComplete)
+    {
+        mediaPicker.SelectImageFromGallery(onComplete);
     }
 }
