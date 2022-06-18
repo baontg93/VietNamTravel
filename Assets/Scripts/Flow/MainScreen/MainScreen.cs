@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,18 +14,15 @@ public class MainScreen : MonoBehaviour
 
     void Start()
     {
-        string json = PlayerPrefs.GetString("MainScreen_unlockedProvines");
-        if (!string.IsNullOrEmpty(json))
-        {
-            unlockedProvines = JsonConvert.DeserializeObject<List<string>>(json);
-        }
-        UserData userData = new();
-        userData.Name = PlayerPrefs.GetString("MainScreen_name", "Unknown");
-        userData.Avatar = "avatar_1";
-        userInfo.UpdateData(userData);
+        MobileCloudServices.OnJoinGame += OnJoinGame;
         tutorialScreen.OnHiden += OnTutorialHiden;
         userCollectDataScreen.OnSubmit += OnNameSubmited;
         mapScreen.OnProvinceUnlocked += OnProvinceUnlocked;
+    }
+
+    private void OnJoinGame(JoinGameData obj)
+    {
+        unlockedProvines = obj.UnlockedData.Provinces;
 
         if (!tutorialScreen.CheckCacheAndOpen())
         {
@@ -37,7 +32,6 @@ public class MainScreen : MonoBehaviour
 
     private void OnNameSubmited(string name)
     {
-        PlayerPrefs.SetString("MainScreen_name", name);
         userInfo.UpdateName(name);
         if (unlockedProvines.Count == 0)
         {
@@ -56,10 +50,7 @@ public class MainScreen : MonoBehaviour
         OpenMap();
         congratScreen.SetProvinceName(provine);
         congratScreen.Show();
-
         unlockedProvines.Add(provine);
-        string json = JsonConvert.SerializeObject(unlockedProvines);
-        PlayerPrefs.SetString("MainScreen_unlockedProvines", json);
     }
 
     public void ClearPlayerPrefs()

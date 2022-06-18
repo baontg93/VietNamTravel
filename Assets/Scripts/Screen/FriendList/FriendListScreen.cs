@@ -37,7 +37,7 @@ public class FriendListScreen : BaseScreen
         {
             UserData friendData = new()
             {
-                Avatar = "avatar_" + UnityEngine.Random.Range(0, 32),
+                Avatar = AvatarLoader.Instance.GetAvatar(UnityEngine.Random.Range(0, 32)),
                 Name = name.GetRandomElement()
             };
             friendDatas.Add(friendData);

@@ -10,6 +10,6 @@ public class FriendItem : MonoBehaviour
     public void UpdateData(UserData friendData)
     {
         Name.text = friendData.Name;
-        Avatar.sprite = AvatarLoader.Instance.GetAvatar(friendData.Avatar);
+        Avatar.sprite = friendData.Avatar;
     }
 }

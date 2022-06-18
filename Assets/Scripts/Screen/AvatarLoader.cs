@@ -6,8 +6,9 @@ public class AvatarLoader : SingletonBehaviour<AvatarLoader>
     public Sprite[] ListAvatar;
     public MediaPicker mediaPicker;
 
-    public Sprite GetAvatar(string name)
+    public Sprite GetAvatar(int id)
     {
+        string name = "avatar_" + id;
         for (int i = 0; i < ListAvatar.Length; i++)
         {
             if (ListAvatar[i].name == name)

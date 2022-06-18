@@ -1,10 +1,8 @@
-using UnityEngine;
-
 public class TutorialScreen : BaseScreen
 {
     public bool CheckCacheAndOpen()
     {
-        bool isFinished = PlayerPrefs.GetString("TutorialScreen_Finished", "false") == "true";
+        bool isFinished = MobileStorage.GetBool(StogrageKey.TUTORIAL_FINISH);
         if (!isFinished)
         {
             Show();
@@ -20,7 +18,7 @@ public class TutorialScreen : BaseScreen
 
     public override void Hide()
     {
-        PlayerPrefs.SetString("TutorialScreen_Finished", "true");
+        MobileStorage.SetBool(StogrageKey.TUTORIAL_FINISH, true);
         base.Hide();
     }
 }

@@ -55,11 +55,16 @@ public class BaseScreen : MonoBehaviour
     }
     public virtual void Hide(bool anim)
     {
-        if (!isShown || isRunningTween)
+        if (!isShown)
         {
+            Reset();
             return;
         }
 
+        if (isRunningTween)
+        {
+            return;
+        }
         isShown = false;
         isRunningTween = true;
 
