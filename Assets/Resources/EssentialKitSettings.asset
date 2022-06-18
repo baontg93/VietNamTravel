@@ -84,8 +84,47 @@ MonoBehaviour:
     m_syncInterval: 60
   m_gameServicesSettings:
     m_isEnabled: 1
-    m_leaderboards: []
-    m_achievements: []
+    m_leaderboards:
+    - m_id: 1
+      m_platformId: 1
+      m_platformIdOverrides:
+        m_ios: 
+        m_tvos: 
+        m_android: 
+      m_title: VN Travel Leaderboard
+    m_achievements:
+    - m_id: 1
+      m_platformId: 1
+      m_platformIdOverrides:
+        m_ios: 
+        m_tvos: 
+        m_android: 
+      m_title: Bronze
+      m_numOfStepsToUnlock: 1
+    - m_id: 2
+      m_platformId: 2
+      m_platformIdOverrides:
+        m_ios: 
+        m_tvos: 
+        m_android: 
+      m_title: Silver
+      m_numOfStepsToUnlock: 10
+    - m_id: 3
+      m_platformId: 3
+      m_platformIdOverrides:
+        m_ios: 
+        m_tvos: 
+        m_android: 
+      m_title: Platinum
+      m_numOfStepsToUnlock: 30
+    - m_id: 4
+      m_platformId: 4
+      m_platformIdOverrides:
+        m_ios: 
+        m_tvos: 
+        m_android: 
+      m_title: Gold
+      m_numOfStepsToUnlock: 63
     m_showAchievementCompletionBanner: 1
     m_androidProperties:
       m_playServicesApplicationId: 

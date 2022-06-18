@@ -134,8 +134,11 @@ namespace VoxelBusters.EssentialKit.GameServicesCore.Simulator
                     scores.Add(Score.CreateScoreFromData(current));
                 }
 
-                // update local player score
-                m_localPlayerScore          = Score.CreateScoreFromData(localPlayerScore);    
+                if (localPlayerScore != null)
+                {
+                    // update local player score
+                    m_localPlayerScore = Score.CreateScoreFromData(localPlayerScore);
+                }
 
                 // send result 
                 callback(scores.ToArray(), error);

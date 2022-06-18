@@ -9,7 +9,7 @@ public class MapScreen : BaseScreen
     public TextMeshProUGUI AddressText;
     public TextMeshProUGUI ProvinceText;
 
-    public Action<string> OnProvinceUnlocked = delegate { };
+    public event Action<string> OnProvinceUnlocked = delegate { };
 
     public LocationManager locationManager;
 
@@ -39,21 +39,9 @@ public class MapScreen : BaseScreen
     public override void Show()
     {
         base.Show();
-        Map.SetActive(true);
         locationManager.CheckStatus();
     }
 
-    public override void Hide()
-    {
-        base.Hide();
-        Map.SetActive(false);
-    }
-
-    public override void Reset()
-    {
-        base.Reset();
-        Map.SetActive(false);
-    }
 
     public void UnlockFirstProvince()
     {

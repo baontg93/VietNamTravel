@@ -8,7 +8,6 @@ public class PushNotification : MonoBehaviour
     public static event Action<NotificationSettings> OnSettingsUpdate = delegate { };
     public static event Action<INotification> OnNotificationReceived = delegate { };
 
-    // Start is called before the first frame update
     public void CheckPermission()
     {
         if (!VoxelBusters.EssentialKit.NotificationServices.IsPermissionAvailable())
@@ -24,7 +23,6 @@ public class PushNotification : MonoBehaviour
     {
         VoxelBusters.EssentialKit.NotificationServices.OnNotificationReceived += HandleNotificationReceived;
         VoxelBusters.EssentialKit.NotificationServices.OnSettingsUpdate += HandleSettingsUpdate;
-
     }
 
     void OnDisable()

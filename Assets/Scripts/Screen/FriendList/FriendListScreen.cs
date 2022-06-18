@@ -6,10 +6,10 @@ public class FriendListScreen : BaseScreen
     public Transform PrefabItem;
     public Transform ListContainer;
 
-    public override void Start()
+    public override void Show()
     {
-        base.Start();
-        UpdateData(Random());
+        base.Show();
+        MobileGameServices.Instance.LoadLeaderboard(UpdateData);
     }
 
     public void UpdateData(List<UserData> friendDatas)

@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class AccountScreen : BaseScreen
@@ -8,12 +9,47 @@ public class AccountScreen : BaseScreen
     public TMP_InputField InputName;
     public Image Avatar;
     public Button ButtonSubmit;
+    public GameObject EmptyAchivement;
+    public GameObject ContentAchivement;
+    public Transform PrefabAchivement;
 
-    public Action<string> OnSubmit = delegate { };
+    public event Action<string> OnSubmit;
 
     public override void Start()
     {
+        base.Start();
+        EmptyAchivement.SetActive(true);
+        ContentAchivement.SetActive(false);
         InputName.onValueChanged.AddListener(OnInputValueChanged);
+        MobileGameServices.OnAuthenticated += MobileGameServices_OnAuthenticated;
+    }
+
+    private void MobileGameServices_OnAuthenticated()
+    {
+        MobileGameServices.Instance.LoadAchievements((datas) =>
+        {
+            if (datas != null && datas.Count > 0)
+            {
+                EmptyAchivement.SetActive(false);
+                ContentAchivement.SetActive(true);
+
+                for (int i = 0; i < datas.Count; i++)
+                {
+                    var data = datas[i];
+                    Transform tf = EZ_Pooling.EZ_PoolManager.Spawn(PrefabAchivement);
+                    tf.SetParent(ContentAchivement.transform);
+                    tf.localPosition = Vector3.zero;
+                    tf.localScale = Vector3.one;
+
+                    AchievementItem item = tf.GetComponent<AchievementItem>();
+                }
+            }
+            else
+            {
+                EmptyAchivement.SetActive(true);
+                ContentAchivement.SetActive(false);
+            }
+        });
     }
 
     private void OnInputValueChanged(string value)

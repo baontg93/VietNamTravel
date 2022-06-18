@@ -14,13 +14,15 @@ public class MainScreen : MonoBehaviour
 
     void Start()
     {
-        MobileCloudServices.OnJoinGame += OnJoinGame;
-        tutorialScreen.OnHiden += OnTutorialHiden;
-        userCollectDataScreen.OnSubmit += OnNameSubmited;
-        mapScreen.OnProvinceUnlocked += OnProvinceUnlocked;
+        MobileCloudServices.OnJoinGame += MobileCloudServices_OnJoinGame;
+        tutorialScreen.OnHiden += TutorialScreen_OnHiden;
+        userCollectDataScreen.OnSubmit += UserCollectDataScreen_OnSubmit;
+        mapScreen.OnProvinceUnlocked += MapScreen_OnProvinceUnlocked;
+        mapScreen.OnShown += MapScreen_OnShown;
+        mapScreen.OnHiden += MapScreen_OnHiden;
     }
 
-    private void OnJoinGame(JoinGameData obj)
+    private void MobileCloudServices_OnJoinGame(JoinGameData obj)
     {
         unlockedProvines = obj.UnlockedData.Provinces;
 
@@ -30,7 +32,13 @@ public class MainScreen : MonoBehaviour
         }
     }
 
-    private void OnNameSubmited(string name)
+    private void TutorialScreen_OnHiden()
+    {
+        tutorialScreen.OnHiden -= TutorialScreen_OnHiden;
+        userCollectDataScreen.CheckCacheAndOpen();
+    }
+
+    private void UserCollectDataScreen_OnSubmit(string name)
     {
         userInfo.UpdateName(name);
         if (unlockedProvines.Count == 0)
@@ -39,13 +47,17 @@ public class MainScreen : MonoBehaviour
         }
     }
 
-    private void OnTutorialHiden()
+    private void MapScreen_OnShown()
     {
-        tutorialScreen.OnHiden -= OnTutorialHiden;
-        userCollectDataScreen.CheckCacheAndOpen();
+        gameObject.SetActive(false);
     }
 
-    public void OnProvinceUnlocked(string provine)
+    private void MapScreen_OnHiden()
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void MapScreen_OnProvinceUnlocked(string provine)
     {
         OpenMap();
         congratScreen.SetProvinceName(provine);

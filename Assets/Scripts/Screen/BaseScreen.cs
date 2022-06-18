@@ -6,8 +6,8 @@ public class BaseScreen : MonoBehaviour
 {
     [SerializeField] protected bool playAnim = true;
     public GameObject Content;
-    public Action OnShown = delegate { };
-    public Action OnHiden = delegate { };
+    public event Action OnShown = delegate { };
+    public event Action OnHiden = delegate { };
 
     public bool IsShown { get { return isShown; } }
 
