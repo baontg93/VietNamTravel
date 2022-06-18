@@ -70,7 +70,7 @@ public static class ProvincesParser
 
     public static string GetProvince(string address)
     {
-        address = address.ToLower();
+        address = address.Trim().ToLower();
         foreach (var item in provinces)
         {
             string[] keys = item.Key;
@@ -82,6 +82,7 @@ public static class ProvincesParser
                 }
             }
         }
-        return "";
+
+        return GetProvince(address.Replace(" ", ""));
     }
 }

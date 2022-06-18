@@ -10,6 +10,7 @@ public class CheckedList : MonoBehaviour
 
     private void OnEnable()
     {
+        Clean();
         List<string> provinces = MapScreen.UnlockedData.Provinces;
         for (int i = 0; i < provinces.Count; i++)
         {
@@ -23,7 +24,7 @@ public class CheckedList : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void Clean()
     {
         for (int i = Container.childCount - 1; i >= 0; i--)
         {

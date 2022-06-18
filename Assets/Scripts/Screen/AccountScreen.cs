@@ -9,6 +9,7 @@ public class AccountScreen : BaseScreen
     public TMP_InputField InputName;
     public Image Avatar;
     public Button ButtonSubmit;
+    public Button ButtonClose;
     public GameObject EmptyAchivement;
     public GameObject ContentAchivement;
     public Transform PrefabAchivement;
@@ -82,6 +83,7 @@ public class AccountScreen : BaseScreen
         bool isFinished = MobileStorage.GetBool(StogrageKey.ACCOUTN_SETTING_FINISH);
         if (!isFinished)
         {
+            ButtonClose.gameObject.SetActive(false);
             Show();
         }
         else
@@ -104,6 +106,7 @@ public class AccountScreen : BaseScreen
     public override void Hide()
     {
         MobileStorage.SetBool(StogrageKey.ACCOUTN_SETTING_FINISH, true);
+        ButtonClose.gameObject.SetActive(true);
         base.Hide();
     }
 }

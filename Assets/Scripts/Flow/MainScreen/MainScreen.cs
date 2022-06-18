@@ -28,20 +28,35 @@ public class MainScreen : MonoBehaviour
 
         if (!tutorialScreen.CheckCacheAndOpen())
         {
-            userCollectDataScreen.CheckCacheAndOpen();
+            if (!userCollectDataScreen.CheckCacheAndOpen())
+            {
+                UnlockFirstProvince();
+            }
         }
     }
 
     private void TutorialScreen_OnHiden()
     {
         tutorialScreen.OnHiden -= TutorialScreen_OnHiden;
-        userCollectDataScreen.CheckCacheAndOpen();
+        if (!userCollectDataScreen.CheckCacheAndOpen())
+        {
+            UnlockFirstProvince();
+        }
+    }
+
+    private void UnlockFirstProvince()
+    {
+        if (unlockedProvines == null || unlockedProvines.Count == 0)
+        {
+            mapScreen.Show();
+            mapScreen.UnlockFirstProvince();
+        }
     }
 
     private void UserCollectDataScreen_OnSubmit(string name)
     {
         userInfo.UpdateName(name);
-        if (unlockedProvines.Count == 0)
+        if (unlockedProvines == null || unlockedProvines.Count == 0)
         {
             mapScreen.UnlockFirstProvince();
         }
@@ -70,9 +85,13 @@ public class MainScreen : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
-    public void OpenMap()
+    public void OpenMap(bool showChecking = false)
     {
         mapScreen.Show();
+        if (showChecking)
+        {
+            mapScreen.ShowChecking();
+        }
     }
 
     public void CloseMap()

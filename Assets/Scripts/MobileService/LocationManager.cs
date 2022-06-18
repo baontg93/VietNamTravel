@@ -86,6 +86,10 @@ public class LocationManager : MonoBehaviour
                 Debug.Log("Location OK");
                 break;
         }
+#else
+        Address = "Ho Chi Minh city";
+        Province = ProvincesParser.GetProvince(Address);
+        OnLocation_Updated?.Invoke(Address, Province);
 #endif
     }
 
