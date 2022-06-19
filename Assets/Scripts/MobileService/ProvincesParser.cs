@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 public static class ProvincesParser
 {
-    static readonly Dictionary<string[], string> provinces = new()
+    public static List<string> Provinces = new();
+
+
+    public static readonly Dictionary<string[], string> DataProvinces = new()
     {
         { new string[] { "AnGiang", "An Giang", "an_giang" }, "An Giang" },
         { new string[] { "BaRiaVungTau", "Ba Ria – Vung Tau", "ba_ria_vung_tau" }, "Bà Rịa – Vũng Tàu" },
@@ -58,7 +61,7 @@ public static class ProvincesParser
         { new string[] { "ThaiBinh", "Thai Binh", "thai_binh" }, "Thái Bình" },
         { new string[] { "ThaiNguyen", "Thai Nguyen", "thai_nguyen" }, "Thái Nguyên" },
         { new string[] { "ThanhHoa", "Thanh Hoa", "thanh_hoa" }, "Thanh Hóa" },
-        { new string[] { "HoChiMinhCity", "Ho Chi Minh city", "ho_chi_minh_city" }, "Thành Phố Hồ Chí Minh" },
+        { new string[] { "HoChiMinh", "Ho Chi Minh", "ho_chi_minh" }, "Thành Phố Hồ Chí Minh" },
         { new string[] { "ThuaThienHue", "Thua Thien Hue", "thua_thien_hue" }, "Thừa Thiên Huế" },
         { new string[] { "TienGiang", "Tien Giang", "tien_giang" }, "Tiền Giang" },
         { new string[] { "TraVinh", "Tra Vinh", "tra_vinh" }, "Trà Vinh" },
@@ -70,19 +73,21 @@ public static class ProvincesParser
 
     public static string GetProvince(string address)
     {
-        address = address.Trim().ToLower();
-        foreach (var item in provinces)
+        address = address.ToLower().Replace(" ", "");
+        foreach (var item in DataProvinces)
         {
             string[] keys = item.Key;
             for (int i = 0; i < keys.Length; i++)
             {
-                if (address.Contains(keys[i].ToLower()))
+                string key = keys[i].ToLower().Replace(" ", "");
+                if (address.Contains(key.ToLower()))
                 {
                     return item.Value;
                 }
             }
         }
 
-        return GetProvince(address.Replace(" ", ""));
+        UnityEngine.Debug.LogError("Can't find the address = " + address);
+        return "Undefined";
     }
 }

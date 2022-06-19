@@ -10,8 +10,6 @@ public class MainScreen : MonoBehaviour
     [SerializeField] private AccountScreen userCollectDataScreen;
     [SerializeField] private CongratScreen congratScreen;
 
-    private List<string> unlockedProvines = new();
-
     void Start()
     {
         MobileCloudServices.OnJoinGame += MobileCloudServices_OnJoinGame;
@@ -24,8 +22,6 @@ public class MainScreen : MonoBehaviour
 
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)
     {
-        unlockedProvines = obj.UnlockedData.Provinces;
-
         if (!tutorialScreen.CheckCacheAndOpen())
         {
             if (!userCollectDataScreen.CheckCacheAndOpen())
@@ -46,7 +42,7 @@ public class MainScreen : MonoBehaviour
 
     private void UnlockFirstProvince()
     {
-        if (unlockedProvines == null || unlockedProvines.Count == 0)
+        if (mapScreen.UnlockedData.Provinces.Count == 0)
         {
             mapScreen.Show();
             mapScreen.UnlockFirstProvince();
@@ -56,10 +52,7 @@ public class MainScreen : MonoBehaviour
     private void UserCollectDataScreen_OnSubmit(string name)
     {
         userInfo.UpdateName(name);
-        if (unlockedProvines == null || unlockedProvines.Count == 0)
-        {
-            mapScreen.UnlockFirstProvince();
-        }
+        UnlockFirstProvince();
     }
 
     private void MapScreen_OnShown()
@@ -77,7 +70,6 @@ public class MainScreen : MonoBehaviour
         OpenMap();
         congratScreen.SetProvinceName(provine);
         congratScreen.Show();
-        unlockedProvines.Add(provine);
     }
 
     public void ClearPlayerPrefs()

@@ -19,6 +19,13 @@ public class MapScreen : BaseScreen
     public override void Start()
     {
         base.Start();
+
+        ProvincesParser.Provinces = new();
+        foreach (var item in ProvincesParser.DataProvinces)
+        {
+            ProvincesParser.Provinces.Add(item.Value);
+        }
+
         locationManager.OnLocation_Updated += OnLocation_Updated;
         MobileCloudServices.OnDataReceived += MobileCloudServices_OnDataReceived;
         MobileCloudServices.OnJoinGame += MobileCloudServices_OnJoinGame;
