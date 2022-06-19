@@ -1,11 +1,10 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapScreen : BaseScreen
 {
-    public GameObject Map;
-
     public TextMeshProUGUI AddressText;
 
     public event Action<string> OnProvinceUnlocked = delegate { };
@@ -15,6 +14,10 @@ public class MapScreen : BaseScreen
     public UnlockedData UnlockedData = new();
 
     public GameObject Checking;
+    public Button BtnChecking;
+    public Button BtnResetCam;
+    public VietNamMap CheckingMap;
+    public GameObject HomeMap;
 
     public override void Start()
     {
@@ -29,6 +32,20 @@ public class MapScreen : BaseScreen
         locationManager.OnLocation_Updated += OnLocation_Updated;
         MobileCloudServices.OnDataReceived += MobileCloudServices_OnDataReceived;
         MobileCloudServices.OnJoinGame += MobileCloudServices_OnJoinGame;
+    }
+
+    public void FocusOn(string province)
+    {
+        BtnResetCam.gameObject.SetActive(true);
+        AddressText.text = province;
+        CheckingMap.FocusOn(province);
+        HideChecking();
+    }
+
+    public void ResetCam(bool playAnim = false)
+    {
+        CheckingMap.ResetCam(playAnim);
+        BtnResetCam.gameObject.SetActive(false);
     }
 
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)
@@ -46,29 +63,41 @@ public class MapScreen : BaseScreen
 
     private void OnLocation_Updated(string adrress, string province)
     {
-        AddressText.text = adrress;
     }
 
     public void ShowChecking()
     {
         Checking.SetActive(true);
+        BtnChecking.interactable = false;
+    }
+
+    public void HideChecking()
+    {
+        Checking.SetActive(false);
+        BtnChecking.interactable = true;
     }
 
     public override void Show()
     {
         base.Show();
+        HomeMap.SetActive(false);
+        CheckingMap.gameObject.SetActive(true);
         locationManager.CheckStatus();
     }
 
-    public override void Reset()
+    public override void Hide()
     {
-        base.Reset();
-        Checking.SetActive(false);
+        base.Hide();
+        HomeMap.SetActive(true);
+        CheckingMap.gameObject.SetActive(false);
+        HideChecking();
+        ResetCam();
     }
 
     public void UnlockFirstProvince()
     {
         string province = locationManager.Province;
+        FocusOn(province);
         UnlockProvince(province);
     }
 

@@ -3,7 +3,6 @@ public static class ProvincesParser
 {
     public static List<string> Provinces = new();
 
-
     public static readonly Dictionary<string[], string> DataProvinces = new()
     {
         { new string[] { "AnGiang", "An Giang", "an_giang" }, "An Giang" },
@@ -29,7 +28,7 @@ public static class ProvincesParser
         { new string[] { "GiaLai", "Gia Lai", "gia_lai" }, "Gia Lai" },
         { new string[] { "HaGiang", "Ha Giang", "ha_giang" }, "Hà Giang" },
         { new string[] { "HaNam", "Ha Nam", "ha_nam" }, "Hà Nam" },
-        { new string[] { "HaNoi", "Hanoi", "ha noi" }, "Hà Nội" },
+        { new string[] { "HaNoi", "Hanoi", "ha_noi" }, "Hà Nội" },
         { new string[] { "HaTinh", "Ha Tinh", "ha_tinh" }, "Hà Tĩnh" },
         { new string[] { "HaiDuong", "Hai Duong", "hai_duong" }, "Hải Dương" },
         { new string[] { "HaiPhong", "Hai Phong", "hai_phong" }, "Hải Phòng" },
@@ -73,13 +72,13 @@ public static class ProvincesParser
 
     public static string GetProvince(string address)
     {
-        address = address.ToLower().Replace(" ", "");
+        address = address.ToLower().Replace(" ", "").Replace("-", "").Replace("_", "");
         foreach (var item in DataProvinces)
         {
             string[] keys = item.Key;
             for (int i = 0; i < keys.Length; i++)
             {
-                string key = keys[i].ToLower().Replace(" ", "");
+                string key = keys[i].ToLower().Replace(" ", "").Replace("-", "").Replace("_", "");
                 if (address.Contains(key.ToLower()))
                 {
                     return item.Value;

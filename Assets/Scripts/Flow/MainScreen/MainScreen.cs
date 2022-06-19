@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainScreen : MonoBehaviour
@@ -18,6 +17,13 @@ public class MainScreen : MonoBehaviour
         mapScreen.OnProvinceUnlocked += MapScreen_OnProvinceUnlocked;
         mapScreen.OnShown += MapScreen_OnShown;
         mapScreen.OnHiden += MapScreen_OnHiden;
+
+        EventManager.Instance.Register(GameEvent.FocusOnProvince, OnFocusOnProvince);
+    }
+
+    private void OnFocusOnProvince(object province)
+    {
+        mapScreen.FocusOn((string)province);
     }
 
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)

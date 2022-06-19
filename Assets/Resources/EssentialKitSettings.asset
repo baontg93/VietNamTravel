@@ -80,7 +80,7 @@ MonoBehaviour:
     m_isEnabled: 0
   m_cloudServicesSettings:
     m_isEnabled: 1
-    m_synchronizeOnLoad: 1
+    m_synchronizeOnLoad: 0
     m_syncInterval: 60
   m_gameServicesSettings:
     m_isEnabled: 1

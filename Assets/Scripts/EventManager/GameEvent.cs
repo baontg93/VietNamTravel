@@ -7,10 +7,5 @@ public class GameEvent : BaseEvent
 {
     protected GameEvent(string displayName) : base(displayName) { }
 
-    public static readonly GameEvent Connected = new("Connected");
-    public static readonly GameEvent RequestError = new("RequestError");
-    public static readonly GameEvent LandDataUpdated = new("LandDataUpdated");
-    public static readonly GameEvent HumanDataUpdated = new("HumanDataUpdated");
-    public static readonly GameEvent RefreshFarmScreen = new("RefreshFarmScreen");
-    public static readonly GameEvent VisitMarket = new("VisitMarket");
+    public static readonly GameEvent FocusOnProvince = new("FocusOnProvince");
 }

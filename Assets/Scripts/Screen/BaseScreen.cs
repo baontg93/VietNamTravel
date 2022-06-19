@@ -21,7 +21,7 @@ public class BaseScreen : MonoBehaviour
     {
         if (!isShown)
         {
-            Reset();
+            Hide();
         }
     }
 

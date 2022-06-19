@@ -18,5 +18,6 @@ public class CheckedItem : MonoBehaviour
     public void OnClick()
     {
         OnItemClicked?.Invoke(province);
+        EventManager.Instance.Publish(GameEvent.FocusOnProvince, province);
     }
 }

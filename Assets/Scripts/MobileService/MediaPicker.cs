@@ -17,6 +17,7 @@ public class MediaPicker : MonoBehaviour
             {
                 Debug.Log("Select image from gallery finished successfully.");
                 CropImage(textureData.GetTexture(), onComplete);
+                onComplete(GetSprite(textureData.GetTexture()));
             }
             else
             {

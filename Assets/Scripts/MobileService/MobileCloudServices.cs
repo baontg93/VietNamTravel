@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using VoxelBusters.CoreLibrary;
 using VoxelBusters.EssentialKit;
@@ -10,9 +11,17 @@ public class MobileCloudServices : SingletonBehaviour<MobileCloudServices>
 
     private bool firstUpdate = true;
 
-    private void Awake()
+    private void Start()
     {
-        CloudServices.Synchronize();
+        StartCoroutine(Synchronize());
+    }
+
+    IEnumerator Synchronize()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Debug.Log("Synchronize");
+        FirstUpdate();
+        //CloudServices.Synchronize();
     }
 
     protected void OnEnable()
