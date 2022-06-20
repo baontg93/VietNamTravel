@@ -12,15 +12,16 @@ public class CongratScreen : BaseScreen
         base.Show();
 
         if (tween != null) tween.Kill();
-        tween = DOVirtual.DelayedCall(5f, () =>
+        tween = DOVirtual.DelayedCall(3f, () =>
         {
             Hide();
         });
     }
 
-    public void SetProvinceName(string province)
+    public void Show(string province)
     {
-        AddressText.text = province;
+        Show();
+        AddressText.text = "You unlocked\n" + province + "\nPlay more and unlock more.";
     }
 
     public override void Reset()

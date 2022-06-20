@@ -20,8 +20,7 @@ public class MobileCloudServices : SingletonBehaviour<MobileCloudServices>
     {
         yield return new WaitForSeconds(0.1f);
         Debug.Log("Synchronize");
-        FirstUpdate();
-        //CloudServices.Synchronize();
+        CloudServices.Synchronize();
     }
 
     protected void OnEnable()

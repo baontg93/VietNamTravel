@@ -23,11 +23,12 @@ public class MainScreen : MonoBehaviour
 
     private void OnFocusOnProvince(object province)
     {
-        mapScreen.FocusOn((string)province);
+        mapScreen.UnlockProvince((string)province);
     }
 
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)
     {
+        Debug.Log("On Join Game");
         if (!tutorialScreen.CheckCacheAndOpen())
         {
             if (!userCollectDataScreen.CheckCacheAndOpen())
@@ -55,9 +56,10 @@ public class MainScreen : MonoBehaviour
         }
     }
 
-    private void UserCollectDataScreen_OnSubmit(string name)
+    private void UserCollectDataScreen_OnSubmit(string name, Sprite avatar)
     {
         userInfo.UpdateName(name);
+        userInfo.UpdateAvatar(avatar);
         UnlockFirstProvince();
     }
 
@@ -74,7 +76,7 @@ public class MainScreen : MonoBehaviour
     private void MapScreen_OnProvinceUnlocked(string provine)
     {
         OpenMap();
-        congratScreen.SetProvinceName(provine);
+        congratScreen.Show(provine);
         congratScreen.Show();
     }
 

@@ -8,10 +8,10 @@ public class MobileStorage : MonoBehaviour
     private static bool IsCloudAvailable()
     {
         bool isAvailable = CloudServices.IsAvailable();
-        //if (!isAvailable)
-        //{
-        //    CloudServices.Synchronize();
-        //}
+        if (!isAvailable)
+        {
+            CloudServices.Synchronize();
+        }
         return isAvailable;
     }
 

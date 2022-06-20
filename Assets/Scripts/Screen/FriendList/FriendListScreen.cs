@@ -16,7 +16,7 @@ public class FriendListScreen : BaseScreen
     {
         if (friendDatas == null)
         {
-            return;
+            friendDatas = Random();
         }
         foreach (var item in friendDatas)
         {

@@ -51,7 +51,7 @@ public class MobileGameServices : SingletonBehaviour<MobileGameServices>
                                 data.Description = description1.AchievedDescription;
                                 data.Title = description1.Title;
                                 data.Sprite = textureData.GetTexture().GetSprite();
-                                achievementDescriptions.Add(description1.Id, data);
+                                achievementDescriptions.TAdd(description1.Id, data);
                             }
                         });
                     }
@@ -154,35 +154,44 @@ public class MobileGameServices : SingletonBehaviour<MobileGameServices>
         leaderboard.TimeScope = LeaderboardTimeScope.AllTime;
         leaderboard.LoadTopScores((result, error) =>
         {
-            Debug.Log("Scores length : " + result.Scores.Length);
-            IScore localPlayerScore = leaderboard.LocalPlayerScore;
-            if (localPlayerScore != null)
+            List<UserData> datas = null;
+            if (result != null && error == null)
             {
-                Debug.Log(string.Format("Local Player Score : {0}  Rank : {1}", localPlayerScore.Value, localPlayerScore.Rank));
-            }
-            else
-            {
-                Debug.Log("No local player score available!");
-            }
-
-            List<UserData> datas = new();
-            Debug.Log("Displaying scores..." + result.Scores.Length);
-            foreach (IScore score in result.Scores)
-            {
-
-                score.Player.LoadImage((textureData, innerError) =>
+                Debug.Log("Scores length : " + result.Scores.Length);
+                IScore localPlayerScore = leaderboard.LocalPlayerScore;
+                if (localPlayerScore != null)
                 {
-                    if (textureData != null && innerError == null)
+                    Debug.Log(string.Format("Local Player Score : {0}  Rank : {1}", localPlayerScore.Value, localPlayerScore.Rank));
+                }
+                else
+                {
+                    Debug.Log("No local player score available!");
+                }
+
+                Debug.Log("Displaying scores..." + result.Scores.Length);
+                if (result.Scores.Length > 0)
+                {
+                    datas = new();
+                    foreach (IScore score in result.Scores)
                     {
-                        UserData user = new()
+
+                        score.Player.LoadImage((textureData, innerError) =>
                         {
-                            Name = score.Player.DisplayName,
-                            Point = score.Value,
-                            Avatar = textureData.GetTexture().GetSprite()
-                        };
-                        datas.Add(user);
+                            if (textureData != null && innerError == null)
+                            {
+                                UserData user = new()
+                                {
+                                    Name = score.Player.DisplayName,
+                                    Point = score.Value,
+                                    Avatar = textureData.GetTexture().GetSprite()
+                                };
+                                datas.Add(user);
+                            }
+                        });
                     }
-                });
+
+                }
+
             }
 
             onComplete?.Invoke(datas);

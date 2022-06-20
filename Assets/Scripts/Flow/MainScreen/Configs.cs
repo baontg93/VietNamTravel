@@ -15,5 +15,5 @@ public static class StogrageKey
     public const string USER_UNLOCKED_DATA = "VN_TRAVEL_UNLOCKED_DATA";
 
     public const string TUTORIAL_FINISH = "VN_TRAVEL_TUTORIAL_FINISH";
-    public const string ACCOUTN_SETTING_FINISH = "VN_TRAVEL_ACCOUTN_SETTING_FINISH";
+    public const string ACCOUNT_SETTING_FINISH = "VN_TRAVEL_ACCOUTN_SETTING_FINISH";
 }

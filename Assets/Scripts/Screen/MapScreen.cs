@@ -92,12 +92,12 @@ public class MapScreen : BaseScreen
         CheckingMap.gameObject.SetActive(false);
         HideChecking();
         ResetCam();
+        AddressText.text = "";
     }
 
     public void UnlockFirstProvince()
     {
         string province = locationManager.Province;
-        FocusOn(province);
         UnlockProvince(province);
     }
 
@@ -109,7 +109,7 @@ public class MapScreen : BaseScreen
         }
         UnlockedData.Provinces.AddNonExistItem(province);
         MobileStorage.SetObject(StogrageKey.USER_UNLOCKED_DATA, UnlockedData);
-
+        FocusOn(province);
         OnProvinceUnlocked(province);
     }
 }

@@ -9,15 +9,14 @@ public class MediaPicker : MonoBehaviour
     [SerializeField] private float minAspectRatio = 1f;
     [SerializeField] private float maxAspectRatio = 1f;
 
-    public void SelectImageFromGallery(Action<Sprite> onComplete)
+    public void SelectImageFromGallery(Action<Sprite> onComplete, int width = 128, int height = 128)
     {
         MediaServices.SelectImageFromGalleryWithUserPermision(true, (textureData, error) =>
         {
             if (error == null)
             {
                 Debug.Log("Select image from gallery finished successfully.");
-                CropImage(textureData.GetTexture(), onComplete);
-                onComplete(GetSprite(textureData.GetTexture()));
+                onComplete(GetSprite(textureData.GetTexture(), width, height));
             }
             else
             {
@@ -60,12 +59,27 @@ public class MediaPicker : MonoBehaviour
         });
     }
 
-    Sprite GetSprite(Texture2D texture)
+    public Sprite GetSprite(Texture2D texture, int width = 256, int height = 256)
     {
         if (texture == null)
         {
             return null;
         }
+        texture = Resize(texture, width, height);
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    Texture2D Resize(Texture2D texture2D, int targetX, int targetY)
+    {
+        RenderTexture rt = new RenderTexture(targetX, targetY, 24);
+        RenderTexture aciveRT = RenderTexture.active;
+        RenderTexture.active = rt;
+        Graphics.Blit(texture2D, rt);
+        Texture2D result = new Texture2D(targetX, targetY);
+        result.ReadPixels(new Rect(0, 0, targetX, targetY), 0, 0);
+        result.Apply();
+        RenderTexture.active = aciveRT;
+        Destroy(rt);
+        return result;
     }
 }

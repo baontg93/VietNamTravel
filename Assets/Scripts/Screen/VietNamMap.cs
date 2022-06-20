@@ -54,9 +54,9 @@ public class VietNamMap : MonoBehaviour
         {
             if (playAnim)
             {
-                Camera.main.transform.DOMove(defaultCamPos, 1f);
-                Camera.main.transform.DORotateQuaternion(defaultCamRotation, 1f);
-            } else
+                TweenTo(defaultCamPos, defaultCamRotation);
+            }
+            else
             {
                 Camera.main.transform.SetPositionAndRotation(defaultCamPos, defaultCamRotation);
             }
@@ -71,6 +71,7 @@ public class VietNamMap : MonoBehaviour
 
     public void FocusOn(string province)
     {
+        if (string.IsNullOrEmpty(province)) return;
         Debug.Log("Camera is focusing on " + province);
 
         gameObject.SetActive(true);
@@ -95,7 +96,13 @@ public class VietNamMap : MonoBehaviour
         tempCamTransform.position = target.TransformPoint(LocalPosOfCam);
         tempCamTransform.LookAt(target.position);
 
-        Camera.main.transform.DOMove(tempCamTransform.position, 1f);
-        Camera.main.transform.DORotateQuaternion(tempCamTransform.rotation, 1f);
+        TweenTo(tempCamTransform.position, tempCamTransform.rotation);
+    }
+
+    void TweenTo(Vector3 position, Quaternion lookAt)
+    {
+        DOTween.Kill(this);
+        Camera.main.transform.DOMove(position, 1f).SetId(this);
+        Camera.main.transform.DORotateQuaternion(lookAt, 1f).SetId(this);
     }
 }

@@ -809,6 +809,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     Android: ENABLE_VOXELBUSTERS_ESSENTIAL_KIT
     Standalone: ENABLE_VOXELBUSTERS_ESSENTIAL_KIT
+    WebGL: ENABLE_VOXELBUSTERS_ESSENTIAL_KIT
     iPhone: ENABLE_VOXELBUSTERS_ESSENTIAL_KIT
   additionalCompilerArguments: {}
   platformArchitecture: {}

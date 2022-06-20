@@ -233,7 +233,7 @@ public static class Utils
         }
         return true;
     }
-    public static void TryAdd<TKey, TValue>(this Dictionary<TKey, TValue> dic, TKey key, TValue value)
+    public static void TAdd<TKey, TValue>(this Dictionary<TKey, TValue> dic, TKey key, TValue value)
     {
         if (dic.ContainsKey(key))
         {

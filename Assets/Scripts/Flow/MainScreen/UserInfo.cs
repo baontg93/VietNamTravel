@@ -49,8 +49,11 @@ public class UserInfo : SingletonBehaviour<UserInfo>
 
     public void UpdateAvatar(Sprite avatar)
     {
-        Avatar.sprite = avatar;
+        if (avatar != null)
+        {
+            Avatar.sprite = avatar;
 
-        MobileStorage.SetSprite(StogrageKey.USER_AVATAR, avatar);
+            MobileStorage.SetSprite(StogrageKey.USER_AVATAR, avatar);
+        }
     }
 }

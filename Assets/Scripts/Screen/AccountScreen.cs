@@ -14,7 +14,7 @@ public class AccountScreen : BaseScreen
     public GameObject ContentAchivement;
     public Transform PrefabAchivement;
 
-    public event Action<string> OnSubmit;
+    public event Action<string, Sprite> OnSubmit;
 
     public override void Start()
     {
@@ -62,7 +62,12 @@ public class AccountScreen : BaseScreen
     {
         string name = InputName.text;
 
-        OnSubmit?.Invoke(name);
+        if (isShown)
+        {
+            MobileStorage.SetBool(StogrageKey.ACCOUNT_SETTING_FINISH, true);
+        }
+
+        OnSubmit?.Invoke(name, Avatar.sprite);
         Hide();
     }
 
@@ -73,14 +78,13 @@ public class AccountScreen : BaseScreen
             if (sprite != null)
             {
                 Avatar.sprite = sprite;
-                UserInfo.Instance.UpdateAvatar(sprite);
             }
         });
     }
 
     public bool CheckCacheAndOpen()
     {
-        bool isFinished = MobileStorage.GetBool(StogrageKey.ACCOUTN_SETTING_FINISH);
+        bool isFinished = MobileStorage.GetBool(StogrageKey.ACCOUNT_SETTING_FINISH);
         if (!isFinished)
         {
             ButtonClose.gameObject.SetActive(false);
@@ -105,7 +109,6 @@ public class AccountScreen : BaseScreen
 
     public override void Hide()
     {
-        MobileStorage.SetBool(StogrageKey.ACCOUTN_SETTING_FINISH, true);
         ButtonClose.gameObject.SetActive(true);
         base.Hide();
     }

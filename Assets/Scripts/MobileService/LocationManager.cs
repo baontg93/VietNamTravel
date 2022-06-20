@@ -40,7 +40,10 @@ public class LocationManager : MonoBehaviour
                 }
                 Address = finalMsg;
                 Province = ProvincesParser.GetProvince(finalMsg);
-                OnLocation_Updated?.Invoke(Address, Province);
+                if (!string.IsNullOrEmpty(Province))
+                {
+                    OnLocation_Updated?.Invoke(Address, Province);
+                }
             }
             else if (values[0] == "Location")
             {
@@ -69,6 +72,7 @@ public class LocationManager : MonoBehaviour
         ischecked = true;
 #if !UNITY_EDITOR
         int temp = LocationManagerBridge.getAuthrizationLevelForApplication();
+        Debug.Log("LocationManager's status = " + temp);
         switch (temp)
         {
             case 0: //"Not Determined"
