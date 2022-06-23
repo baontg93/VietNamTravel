@@ -5,10 +5,12 @@ The script only runs on mobile devices or the remote app.
 
 */
 
+using System;
 using UnityEngine;
 
-class ScrollAndPinch : MonoBehaviour
+public class ScrollAndPinch : MonoBehaviour
 {
+    public event Action OnScrollAndPinch;
 #if UNITY_IOS || UNITY_ANDROID
     public Camera Camera;
     public bool Rotate;
@@ -37,11 +39,14 @@ class ScrollAndPinch : MonoBehaviour
             switch (Input.GetTouch(0).phase)
             {
                 case TouchPhase.Began:
-                    Debug.Log("Began");
                     touchedOnTarget = true;
                     break;
                 case TouchPhase.Moved:
-                    if (touchedOnTarget) Camera.transform.Translate(Delta1, Space.World);
+                    if (touchedOnTarget)
+                    {
+                        Camera.transform.Translate(Delta1, Space.World);
+                        OnScrollAndPinch?.Invoke();
+                    }
                     break;
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
@@ -61,16 +66,16 @@ class ScrollAndPinch : MonoBehaviour
             //calc zoom
             var zoom = Vector3.Distance(pos1, pos2) /
                        Vector3.Distance(pos1b, pos2b);
-
-            //edge case
-            if (zoom == 0 || zoom > 10)
-                return;
+            zoom = Mathf.Clamp(zoom, 0, 10);
 
             //Move cam amount the mid ray
             Camera.transform.position = Vector3.LerpUnclamped(pos1, Camera.transform.position, 1 / zoom);
 
             if (Rotate && pos2b != pos2)
                 Camera.transform.RotateAround(pos1, Plane.normal, Vector3.SignedAngle(pos2 - pos1, pos2b - pos1b, Plane.normal));
+
+
+            OnScrollAndPinch?.Invoke();
         }
 
     }

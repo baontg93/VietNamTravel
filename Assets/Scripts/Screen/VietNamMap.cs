@@ -162,7 +162,11 @@ public class VietNamMap : MonoBehaviour
     void TweenTo(Vector3 position, Quaternion lookAt)
     {
         DOTween.Kill(this);
-        Camera.main.transform.DOMove(position, 1f).SetId(this);
-        Camera.main.transform.DORotateQuaternion(lookAt, 1f).SetId(this);
+        Camera.main.transform.DORotateQuaternion(lookAt, 0.95f).SetId(this);
+        Camera.main.transform.DOMove(position, 1f).OnComplete(() =>
+        {
+            DOTween.Kill(this);
+            Camera.main.transform.SetPositionAndRotation(position, lookAt);
+        }).SetId(this);
     }
 }

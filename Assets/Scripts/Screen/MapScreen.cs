@@ -18,6 +18,7 @@ public class MapScreen : BaseScreen
     public Button BtnResetCam;
     public VietNamMap CheckingMap;
     public GameObject HomeMap;
+    public ScrollAndPinch ScrollAndPinchMap;
 
     public override void Start()
     {
@@ -32,6 +33,12 @@ public class MapScreen : BaseScreen
         locationManager.OnLocation_Updated += OnLocation_Updated;
         MobileCloudServices.OnDataReceived += MobileCloudServices_OnDataReceived;
         MobileCloudServices.OnJoinGame += MobileCloudServices_OnJoinGame;
+        ScrollAndPinchMap.OnScrollAndPinch += ScrollAndPinchMap_OnScrollAndPinch;
+    }
+
+    private void ScrollAndPinchMap_OnScrollAndPinch()
+    {
+        BtnResetCam.gameObject.active = true;
     }
 
     public void FocusOn(string province)
@@ -48,6 +55,7 @@ public class MapScreen : BaseScreen
         BtnResetCam.gameObject.SetActive(false);
         AddressText.text = "";
     }
+
 
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)
     {
