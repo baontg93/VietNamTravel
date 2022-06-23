@@ -19,9 +19,15 @@ public class MainScreen : MonoBehaviour
         mapScreen.OnHiden += MapScreen_OnHiden;
 
         EventManager.Instance.Register(GameEvent.FocusOnProvince, OnFocusOnProvince);
+        EventManager.Instance.Register(GameEvent.DoUnlockProvince, OnDoUnlockProvince);
     }
 
     private void OnFocusOnProvince(object province)
+    {
+        mapScreen.FocusOn((string)province);
+    }
+
+    private void OnDoUnlockProvince(object province)
     {
         mapScreen.UnlockProvince((string)province);
     }

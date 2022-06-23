@@ -5,19 +5,17 @@ using UnityEngine;
 public class CheckedItem : MonoBehaviour
 {
     public TextMeshProUGUI TextProvice;
-    public event Action<string> OnItemClicked;
 
-    private string province;
+    protected string province;
 
-    public void UpdateData(string province)
+    public virtual void UpdateData(string province)
     {
         TextProvice.text = province;
         this.province = province;
     }
 
-    public void OnClick()
+    public virtual void OnClick()
     {
-        OnItemClicked?.Invoke(province);
         EventManager.Instance.Publish(GameEvent.FocusOnProvince, province);
     }
 }

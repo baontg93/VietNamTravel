@@ -45,7 +45,6 @@ public class MobileCloudServices : SingletonBehaviour<MobileCloudServices>
         Debug.Log("Received user change callback.");
         Debug.Log("User id: " + user.UserId);
         Debug.Log("User status: " + user.AccountStatus);
-        FirstUpdate();
     }
 
     private void OnSavedDataChange(CloudServicesSavedDataChangeResult result)

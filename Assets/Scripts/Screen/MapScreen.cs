@@ -46,6 +46,7 @@ public class MapScreen : BaseScreen
     {
         CheckingMap.ResetCam(playAnim);
         BtnResetCam.gameObject.SetActive(false);
+        AddressText.text = "";
     }
 
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)
@@ -108,6 +109,7 @@ public class MapScreen : BaseScreen
             return;
         }
         UnlockedData.Provinces.AddNonExistItem(province);
+        UnlockedData.Provinces.Sort();
         MobileStorage.SetObject(StogrageKey.USER_UNLOCKED_DATA, UnlockedData);
         FocusOn(province);
         OnProvinceUnlocked(province);

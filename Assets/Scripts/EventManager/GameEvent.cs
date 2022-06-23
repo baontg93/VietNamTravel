@@ -8,4 +8,5 @@ public class GameEvent : BaseEvent
     protected GameEvent(string displayName) : base(displayName) { }
 
     public static readonly GameEvent FocusOnProvince = new("FocusOnProvince");
+    public static readonly GameEvent DoUnlockProvince = new("DoUnlockProvince");
 }
