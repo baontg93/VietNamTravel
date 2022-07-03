@@ -58,7 +58,7 @@ public class MapPointerSelect : MonoBehaviour
 
     private void DetectPointer()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, layer))
         {
             if (keyValuePairs.ContainsKey(hit.transform))

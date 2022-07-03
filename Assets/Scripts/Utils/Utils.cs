@@ -221,9 +221,10 @@ public static class Utils
 
     public static bool IsPointerOnTarget(int targetSorting)
     {
+        if (Input.touchCount == 0) return false;
         PointerEventData eventData = new(EventSystem.current)
         {
-            position = Input.mousePosition
+            position = Input.GetTouch(0).position
         };
         List<RaycastResult> results = new();
         EventSystem.current.RaycastAll(eventData, results);
@@ -236,9 +237,10 @@ public static class Utils
 
     public static bool IsPointerOnLayer(int targetLayer)
     {
+        if (Input.touchCount == 0) return false;
         PointerEventData eventData = new(EventSystem.current)
         {
-            position = Input.mousePosition
+            position = Input.GetTouch(0).position
         };
         List<RaycastResult> results = new();
         EventSystem.current.RaycastAll(eventData, results);
