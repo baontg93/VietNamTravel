@@ -11,7 +11,7 @@ public class CheckedList : MonoBehaviour
     private void OnEnable()
     {
         Clean();
-        List<string> provinces = MapScreen.UnlockedData.Provinces;
+        List<UnlockedProvince> provinces = MapScreen.UnlockedData.Provinces;
         for (int i = 0; i < provinces.Count; i++)
         {
             Transform tf = EZ_PoolManager.Spawn(PrefabCheckItem);
@@ -20,7 +20,7 @@ public class CheckedList : MonoBehaviour
             tf.localScale = Vector3.one;
 
             CheckedItem checkedItem = tf.GetComponent<CheckedItem>();
-            checkedItem.UpdateData(provinces[i]);
+            checkedItem.UpdateData(provinces[i].Name);
         }
     }
 

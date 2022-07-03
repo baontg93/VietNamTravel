@@ -42,7 +42,7 @@ public class LocationManager : MonoBehaviour
                 Province = ProvincesParser.GetProvince(finalMsg);
                 if (!string.IsNullOrEmpty(Province))
                 {
-                    OnLocation_Updated?.Invoke(Address, Province);
+                    UpdateLocation();
                 }
             }
             else if (values[0] == "Location")
@@ -58,6 +58,12 @@ public class LocationManager : MonoBehaviour
             }
         }
 
+    }
+
+    void UpdateLocation()
+    {
+        OnLocation_Updated?.Invoke(Address, Province);
+        EventManager.Instance.Publish(GameEvent.DoUnlockProvince, Province);
     }
 
     void SetCallback()
@@ -93,7 +99,7 @@ public class LocationManager : MonoBehaviour
 #else
         Address = "Ho Chi Minh city";
         Province = ProvincesParser.GetProvince(Address);
-        OnLocation_Updated?.Invoke(Address, Province);
+        UpdateLocation();
 #endif
     }
 

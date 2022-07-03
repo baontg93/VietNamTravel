@@ -1,50 +1,66 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapScreen : BaseScreen
+public class MapScreen : MonoBehaviour
 {
-    public TextMeshProUGUI AddressText;
-
+    public ScriptableProvince ScriptableProvince;
+    public TextAsset JsonFile;
+    public ScrollAndPinch MapScroll;
+    public ProvinceInfo ProvinceInfo;
     public event Action<string> OnProvinceUnlocked = delegate { };
 
     public LocationManager locationManager;
 
     public UnlockedData UnlockedData = new();
 
-    public GameObject Checking;
+    public BaseScreen Checking;
     public Button BtnChecking;
     public Button BtnResetCam;
     public VietNamMap CheckingMap;
-    public GameObject HomeMap;
-    public ScrollAndPinch ScrollAndPinchMap;
+    public MapPointerSelect MapPointerSelect;
 
-    public override void Start()
+    public void Awake()
     {
-        base.Start();
-
         ProvincesParser.Provinces = new();
         foreach (var item in ProvincesParser.DataProvinces)
         {
             ProvincesParser.Provinces.Add(item.Value);
         }
 
+        CheckingMap.OnDataSetted += CheckingMap_OnDataSetted;
         locationManager.OnLocation_Updated += OnLocation_Updated;
+        MapScroll.OnScrollMap += MapScroll_OnScrollMap;
+        MapPointerSelect.OnSelected += MapPointerSelect_OnSelected;
         MobileCloudServices.OnDataReceived += MobileCloudServices_OnDataReceived;
         MobileCloudServices.OnJoinGame += MobileCloudServices_OnJoinGame;
-        ScrollAndPinchMap.OnScrollAndPinch += ScrollAndPinchMap_OnScrollAndPinch;
+        ResetCam(false);
     }
 
-    private void ScrollAndPinchMap_OnScrollAndPinch()
+    private void CheckingMap_OnDataSetted(Dictionary<string, Transform> dictProvinces)
     {
-        BtnResetCam.gameObject.active = true;
+        ScriptableProvince.Init(JsonFile.text, dictProvinces);
+    }
+
+    private void MapPointerSelect_OnSelected(string province)
+    {
+        if (!string.IsNullOrEmpty(province))
+        {
+            FocusOn(province);
+        }
+    }
+
+    private void MapScroll_OnScrollMap()
+    {
+        BtnResetCam.gameObject.SetActive(true);
     }
 
     public void FocusOn(string province)
     {
         BtnResetCam.gameObject.SetActive(true);
-        AddressText.text = province;
+        ProvinceInfo.ShowData(province, UnlockedData.GetUnlockTime(province));
         CheckingMap.FocusOn(province);
         HideChecking();
     }
@@ -53,13 +69,17 @@ public class MapScreen : BaseScreen
     {
         CheckingMap.ResetCam(playAnim);
         BtnResetCam.gameObject.SetActive(false);
-        AddressText.text = "";
+        ProvinceInfo.Clean();
     }
-
 
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)
     {
         UnlockedData = obj.UnlockedData;
+    }
+
+    public void GameReady()
+    {
+        locationManager.CheckStatus();
     }
 
     private void MobileCloudServices_OnDataReceived(string key, object data)
@@ -76,38 +96,14 @@ public class MapScreen : BaseScreen
 
     public void ShowChecking()
     {
-        Checking.SetActive(true);
+        Checking.Show();
         BtnChecking.interactable = false;
     }
 
     public void HideChecking()
     {
-        Checking.SetActive(false);
+        Checking.Hide();
         BtnChecking.interactable = true;
-    }
-
-    public override void Show()
-    {
-        base.Show();
-        HomeMap.SetActive(false);
-        CheckingMap.gameObject.SetActive(true);
-        locationManager.CheckStatus();
-    }
-
-    public override void Hide()
-    {
-        base.Hide();
-        HomeMap.SetActive(true);
-        CheckingMap.gameObject.SetActive(false);
-        HideChecking();
-        ResetCam();
-        AddressText.text = "";
-    }
-
-    public void UnlockFirstProvince()
-    {
-        string province = locationManager.Province;
-        UnlockProvince(province);
     }
 
     public void UnlockProvince(string province)
@@ -116,8 +112,7 @@ public class MapScreen : BaseScreen
         {
             return;
         }
-        UnlockedData.Provinces.AddNonExistItem(province);
-        UnlockedData.Provinces.Sort();
+        UnlockedData.Unlock(province);
         MobileStorage.SetObject(StogrageKey.USER_UNLOCKED_DATA, UnlockedData);
         FocusOn(province);
         OnProvinceUnlocked(province);
