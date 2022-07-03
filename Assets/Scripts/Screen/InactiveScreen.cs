@@ -3,7 +3,7 @@ using UnityEngine;
 public class InactiveScreen : MonoBehaviour
 {
     public GameObject Content;
-    float activeDuration = 5;
+    float activeDuration = 10;
 
     private void Awake()
     {

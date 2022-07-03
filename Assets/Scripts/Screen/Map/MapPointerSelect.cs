@@ -9,25 +9,33 @@ public class MapPointerSelect : MonoBehaviour
     private Dictionary<Transform, Transform> keyValuePairs;
     private readonly int layer = 1 << 6;
     private bool touchedOnTarget = false;
+    private Camera cam;
 
     private void Awake()
     {
         keyValuePairs = new();
+        cam = Camera.main;
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
-            child.GetOrAddComponent<MeshCollider>();
+            if (child.GetComponent<MeshCollider>() == null)
+            {
+                Debug.LogError("Can't find MeshCollider on game object " + child.name);
+            }
             keyValuePairs.Add(child, child);
             for (int j = 0; j < child.childCount; j++)
             {
                 Transform _child = child.GetChild(j);
-                _child.GetOrAddComponent<MeshCollider>();
+                if (_child.GetComponent<MeshCollider>() == null)
+                {
+                    Debug.LogError("Can't find MeshCollider on game object " + _child.name);
+                }
                 keyValuePairs.Add(_child, child);
             }
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //Scroll
         if (Input.touchCount == 1)
@@ -58,13 +66,13 @@ public class MapPointerSelect : MonoBehaviour
 
     private void DetectPointer()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+        Ray ray = cam.ScreenPointToRay(Input.GetTouch(0).position);
+
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, layer))
         {
             if (keyValuePairs.ContainsKey(hit.transform))
             {
                 string province = keyValuePairs[hit.transform].name;
-                Debug.Log("OnSelected: " + province);
                 OnSelected(province);
             }
         }
