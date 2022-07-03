@@ -32,6 +32,8 @@ public class MapPointerSelect : MonoBehaviour
         //Scroll
         if (Input.touchCount == 1)
         {
+            if (!Utils.IsPointerOnLayer(layer)) return;
+
             switch (Input.GetTouch(0).phase)
             {
                 case TouchPhase.Began:

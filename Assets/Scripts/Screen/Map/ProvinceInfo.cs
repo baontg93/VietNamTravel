@@ -1,15 +1,17 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProvinceInfo : MonoBehaviour
 {
     public TextMeshProUGUI AddressText;
     public TextMeshProUGUI InfomationText;
     public ScriptableProvince ScriptableProvince;
-
+    public Button BtnToggle;
 
     public void ShowData(string provinceName, string unlockedTime)
     {
+        BtnToggle.gameObject.SetActive(true);
         gameObject.SetActive(true);
         Province province = ScriptableProvince.GetProvince(provinceName);
         AddressText.text = province.Name;
@@ -24,8 +26,14 @@ public class ProvinceInfo : MonoBehaviour
     // Update is called once per frame
     public void Clean()
     {
+        BtnToggle.gameObject.SetActive(false);
         gameObject.SetActive(false);
         AddressText.text = "";
         InfomationText.text = "";
+    }
+
+    public void Toggle()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 }

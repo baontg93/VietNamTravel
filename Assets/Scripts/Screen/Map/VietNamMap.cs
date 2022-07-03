@@ -94,6 +94,11 @@ public class VietNamMap : MonoBehaviour
         {
             Location.gameObject.SetActive(false);
         }
+
+        if (currentTF != null)
+        {
+            SetMaterial(currentTF, MaterialDefault);
+        }
     }
 
     [ContextMenu("test")]
