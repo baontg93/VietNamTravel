@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 [Serializable]
 public class SpecificCamPos
@@ -10,7 +11,6 @@ public class SpecificCamPos
     public Vector3 Position;
     public Vector3 MainLandPosition;
 }
-
 
 public class VietNamMap : MonoBehaviour
 {
@@ -21,7 +21,7 @@ public class VietNamMap : MonoBehaviour
     public Material MaterialChecked;
     public Transform Location;
 
-    public Vector3 LocalPosOfCam = new Vector3(0.56f, 2.6f, 2.2f);
+    public Vector3 LocalPosOfCam;
     public SpecificCamPos[] specificCamPos = new SpecificCamPos[] { };
 
     private Vector3 defaultCamPos;
@@ -64,6 +64,7 @@ public class VietNamMap : MonoBehaviour
                 if (temp.ContainsKey(key))
                 {
                     dictProvinces.Add(item.Value, temp[key]);
+                    temp[key].name = item.Value;
                     break;
                 }
             }
@@ -104,7 +105,7 @@ public class VietNamMap : MonoBehaviour
         Debug.Log("Camera is focusing on " + province);
 
         gameObject.SetActive(true);
-        SetMaterial(currentTF, MaterialChecked);
+        SetMaterial(currentTF, MaterialDefault);
 
         Transform tf = dictProvinces[province];
         if (tf != null)
@@ -148,6 +149,9 @@ public class VietNamMap : MonoBehaviour
         }
         tempCamTransform.position = target.TransformPoint(pos);
         tempCamTransform.LookAt(target.position);
+        Vector3 euler = tempCamTransform.localEulerAngles;
+        euler.x += 7;
+        tempCamTransform.localEulerAngles = euler;
 
         TweenTo(tempCamTransform.position, tempCamTransform.rotation);
 

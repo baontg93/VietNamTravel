@@ -15,8 +15,6 @@ public class MainScreen : MonoBehaviour
         tutorialScreen.OnHiden += TutorialScreen_OnHiden;
         userCollectDataScreen.OnSubmit += UserCollectDataScreen_OnSubmit;
         mapScreen.OnProvinceUnlocked += MapScreen_OnProvinceUnlocked;
-        mapScreen.OnShown += MapScreen_OnShown;
-        mapScreen.OnHiden += MapScreen_OnHiden;
 
         EventManager.Instance.Register(GameEvent.FocusOnProvince, OnFocusOnProvince);
         EventManager.Instance.Register(GameEvent.DoUnlockProvince, OnDoUnlockProvince);
@@ -57,7 +55,6 @@ public class MainScreen : MonoBehaviour
     {
         if (mapScreen.UnlockedData.Provinces.Count == 0)
         {
-            mapScreen.Show();
             mapScreen.UnlockFirstProvince();
         }
     }
@@ -69,19 +66,8 @@ public class MainScreen : MonoBehaviour
         UnlockFirstProvince();
     }
 
-    private void MapScreen_OnShown()
-    {
-        gameObject.SetActive(false);
-    }
-
-    private void MapScreen_OnHiden()
-    {
-        gameObject.SetActive(true);
-    }
-
     private void MapScreen_OnProvinceUnlocked(string provine)
     {
-        OpenMap();
         congratScreen.Show(provine);
         congratScreen.Show();
     }
@@ -89,20 +75,6 @@ public class MainScreen : MonoBehaviour
     public void ClearPlayerPrefs()
     {
         PlayerPrefs.DeleteAll();
-    }
-
-    public void OpenMap(bool showChecking = false)
-    {
-        mapScreen.Show();
-        if (showChecking)
-        {
-            mapScreen.ShowChecking();
-        }
-    }
-
-    public void CloseMap()
-    {
-        mapScreen.Hide();
     }
 
     public void OpenFriendList()

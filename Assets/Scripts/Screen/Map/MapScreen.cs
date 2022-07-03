@@ -3,27 +3,24 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapScreen : BaseScreen
+public class MapScreen : MonoBehaviour
 {
     public TextMeshProUGUI AddressText;
-
+    public ScrollAndPinch MapScroll;
     public event Action<string> OnProvinceUnlocked = delegate { };
 
     public LocationManager locationManager;
 
     public UnlockedData UnlockedData = new();
 
-    public GameObject Checking;
+    public BaseScreen Checking;
     public Button BtnChecking;
     public Button BtnResetCam;
     public VietNamMap CheckingMap;
-    public GameObject HomeMap;
-    public ScrollAndPinch ScrollAndPinchMap;
+    public MapPointerSelect MapPointerSelect;
 
-    public override void Start()
+    public void Start()
     {
-        base.Start();
-
         ProvincesParser.Provinces = new();
         foreach (var item in ProvincesParser.DataProvinces)
         {
@@ -31,14 +28,24 @@ public class MapScreen : BaseScreen
         }
 
         locationManager.OnLocation_Updated += OnLocation_Updated;
+        MapScroll.OnScrollMap += MapScroll_OnScrollMap;
+        MapPointerSelect.OnSelected += MapPointerSelect_OnSelected;
         MobileCloudServices.OnDataReceived += MobileCloudServices_OnDataReceived;
         MobileCloudServices.OnJoinGame += MobileCloudServices_OnJoinGame;
-        ScrollAndPinchMap.OnScrollAndPinch += ScrollAndPinchMap_OnScrollAndPinch;
+        ResetCam(false);
     }
 
-    private void ScrollAndPinchMap_OnScrollAndPinch()
+    private void MapPointerSelect_OnSelected(string province)
     {
-        BtnResetCam.gameObject.active = true;
+        if (!string.IsNullOrEmpty(province))
+        {
+            FocusOn(province);
+        }
+    }
+
+    private void MapScroll_OnScrollMap()
+    {
+        BtnResetCam.gameObject.SetActive(true);
     }
 
     public void FocusOn(string province)
@@ -55,7 +62,6 @@ public class MapScreen : BaseScreen
         BtnResetCam.gameObject.SetActive(false);
         AddressText.text = "";
     }
-
 
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)
     {
@@ -76,32 +82,14 @@ public class MapScreen : BaseScreen
 
     public void ShowChecking()
     {
-        Checking.SetActive(true);
+        Checking.Show();
         BtnChecking.interactable = false;
     }
 
     public void HideChecking()
     {
-        Checking.SetActive(false);
+        Checking.Hide();
         BtnChecking.interactable = true;
-    }
-
-    public override void Show()
-    {
-        base.Show();
-        HomeMap.SetActive(false);
-        CheckingMap.gameObject.SetActive(true);
-        locationManager.CheckStatus();
-    }
-
-    public override void Hide()
-    {
-        base.Hide();
-        HomeMap.SetActive(true);
-        CheckingMap.gameObject.SetActive(false);
-        HideChecking();
-        ResetCam();
-        AddressText.text = "";
     }
 
     public void UnlockFirstProvince()

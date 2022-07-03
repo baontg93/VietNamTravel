@@ -233,6 +233,21 @@ public static class Utils
         }
         return true;
     }
+
+    public static bool IsPointerOnLayer(int targetLayer)
+    {
+        PointerEventData eventData = new(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+        List<RaycastResult> results = new();
+        EventSystem.current.RaycastAll(eventData, results);
+        if (results.Count > 0)
+        {
+            return results[0].sortingLayer == targetLayer;
+        }
+        return true;
+    }
     public static void TAdd<TKey, TValue>(this Dictionary<TKey, TValue> dic, TKey key, TValue value)
     {
         if (dic.ContainsKey(key))

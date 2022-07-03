@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class ScrollAndPinch : MonoBehaviour
 {
-    public event Action OnScrollAndPinch;
+    public event Action OnScrollMap = delegate { };
 #if UNITY_IOS || UNITY_ANDROID
     public Camera Camera;
     public bool Rotate;
@@ -45,7 +45,7 @@ public class ScrollAndPinch : MonoBehaviour
                     if (touchedOnTarget)
                     {
                         Camera.transform.Translate(Delta1, Space.World);
-                        OnScrollAndPinch?.Invoke();
+                        OnScrollMap();
                     }
                     break;
                 case TouchPhase.Ended:
@@ -72,10 +72,10 @@ public class ScrollAndPinch : MonoBehaviour
             Camera.transform.position = Vector3.LerpUnclamped(pos1, Camera.transform.position, 1 / zoom);
 
             if (Rotate && pos2b != pos2)
+            {
                 Camera.transform.RotateAround(pos1, Plane.normal, Vector3.SignedAngle(pos2 - pos1, pos2b - pos1b, Plane.normal));
-
-
-            OnScrollAndPinch?.Invoke();
+                OnScrollMap();
+            }
         }
 
     }
