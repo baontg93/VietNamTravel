@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MainScreen : MonoBehaviour
@@ -8,6 +9,8 @@ public class MainScreen : MonoBehaviour
     [SerializeField] private MapScreen mapScreen;
     [SerializeField] private AccountScreen userCollectDataScreen;
     [SerializeField] private CongratScreen congratScreen;
+
+    private bool isReady = false;
 
     void Start()
     {
@@ -27,7 +30,7 @@ public class MainScreen : MonoBehaviour
 
     private void OnDoUnlockProvince(object province)
     {
-        mapScreen.UnlockProvince((string)province);
+        StartCoroutine(CheckAndUnlockProvince((string)province));
     }
 
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)
@@ -35,10 +38,7 @@ public class MainScreen : MonoBehaviour
         Debug.Log("On Join Game");
         if (!tutorialScreen.CheckCacheAndOpen())
         {
-            if (!userCollectDataScreen.CheckCacheAndOpen())
-            {
-                UnlockFirstProvince();
-            }
+            TutorialScreen_OnHiden();
         }
     }
 
@@ -47,29 +47,35 @@ public class MainScreen : MonoBehaviour
         tutorialScreen.OnHiden -= TutorialScreen_OnHiden;
         if (!userCollectDataScreen.CheckCacheAndOpen())
         {
-            UnlockFirstProvince();
+            GameReady();
         }
     }
 
-    private void UnlockFirstProvince()
+    private IEnumerator CheckAndUnlockProvince(string province)
     {
-        if (mapScreen.UnlockedData.Provinces.Count == 0)
+        yield return new WaitUntil(() => isReady);
+        if (!mapScreen.UnlockedData.IsUnlocked(province))
         {
-            mapScreen.UnlockFirstProvince();
+            mapScreen.UnlockProvince(province);
         }
     }
 
     private void UserCollectDataScreen_OnSubmit(string name, Sprite avatar)
     {
+        GameReady();
         userInfo.UpdateName(name);
         userInfo.UpdateAvatar(avatar);
-        UnlockFirstProvince();
+    }
+
+    private void GameReady()
+    {
+        isReady = true;
+        mapScreen.GameReady();
     }
 
     private void MapScreen_OnProvinceUnlocked(string provine)
     {
         congratScreen.Show(provine);
-        congratScreen.Show();
     }
 
     public void ClearPlayerPrefs()

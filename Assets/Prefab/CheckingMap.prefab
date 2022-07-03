@@ -1255,7 +1255,7 @@ MonoBehaviour:
     Position: {x: -1.1, y: 0.87, z: 2.2}
     MainLandPosition: {x: -0.209, y: 0, z: -0.653}
   - Transform: {fileID: 6416783595444839392}
-    Position: {x: -1.1, y: 0.87, z: 2.2}
+    Position: {x: -1.43, y: 0.87, z: 2.78}
     MainLandPosition: {x: -0.5, y: 0, z: 0}
   - Transform: {fileID: 4437197862407685633}
     Position: {x: -1.1, y: 1.04, z: 3.6}
@@ -4603,6 +4603,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3601692298262815367}
+  - component: {fileID: 5771547389824509978}
   m_Layer: 6
   m_Name: map_VN
   m_TagString: Untagged
@@ -4688,6 +4689,18 @@ Transform:
   m_Father: {fileID: 330982905632963155}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5771547389824509978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5982466451117577552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b04fd1519385d4eb4f10da71e79b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6044964771241294105
 GameObject:
   m_ObjectHideFlags: 0

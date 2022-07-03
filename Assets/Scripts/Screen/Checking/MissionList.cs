@@ -19,12 +19,10 @@ public class MissionList : MonoBehaviour
     private void OnEnable()
     {
         Clean();
-        List<string> unlocked = MapScreen.UnlockedData.Provinces;
-
         for (int i = 0; i < ProvincesParser.Provinces.Count; i++)
         {
             string province = ProvincesParser.Provinces[i];
-            if (!unlocked.Contains(province))
+            if (!MapScreen.UnlockedData.IsUnlocked(province))
             {
 
                 Transform tf = EZ_PoolManager.Spawn(PrefabMissionItem);

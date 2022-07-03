@@ -14,6 +14,7 @@ public class SpecificCamPos
 
 public class VietNamMap : MonoBehaviour
 {
+    public event Action<Dictionary<string, Transform>> OnDataSetted = delegate { };
     public Transform[] Provinces;
     public Transform tempCamTransform;
     public Material MaterialDefault;
@@ -53,6 +54,7 @@ public class VietNamMap : MonoBehaviour
         {
             Transform province = Provinces[i];
             temp.Add(province.name.ToLower(), province);
+            SetMaterial(province, MaterialDefault);
         }
 
         dictProvinces = new();
@@ -71,6 +73,7 @@ public class VietNamMap : MonoBehaviour
         }
 
         isCamDataSetted = true;
+        OnDataSetted(dictProvinces);
     }
 
     public void ResetCam(bool playAnim = false)

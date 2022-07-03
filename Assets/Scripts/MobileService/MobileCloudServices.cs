@@ -69,6 +69,7 @@ public class MobileCloudServices : SingletonBehaviour<MobileCloudServices>
 
     private void FirstUpdate()
     {
+        MobileStorage.RemoveKey("VN_TRAVEL_UNLOCKED_DATA");
         string username = MobileStorage.GetString(StogrageKey.USER_NAME, "No name");
         Sprite avatar = MobileStorage.GetSprite(StogrageKey.USER_AVATAR);
         UnlockedData unlockedData = MobileStorage.GetObject<UnlockedData>(StogrageKey.USER_UNLOCKED_DATA);
