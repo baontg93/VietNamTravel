@@ -68,8 +68,14 @@ public class ScrollAndPinch : MonoBehaviour
                        Vector3.Distance(pos1b, pos2b);
             zoom = Mathf.Clamp(zoom, 0, 10);
 
+            if (zoom <= 0 || zoom >= 10) return;
+
             //Move cam amount the mid ray
-            Camera.transform.position = Vector3.LerpUnclamped(pos1, Camera.transform.position, 1 / zoom);
+            Vector3 newPos = Vector3.LerpUnclamped(pos1, Camera.transform.position, 1 / zoom);
+
+            if (newPos.y <= 1 || newPos.y >= 30) return;
+
+            Camera.transform.position = newPos;
 
             if (Rotate && pos2b != pos2)
                 Camera.transform.RotateAround(pos1, Plane.normal, Vector3.SignedAngle(pos2 - pos1, pos2b - pos1b, Plane.normal));
