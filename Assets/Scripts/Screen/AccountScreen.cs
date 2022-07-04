@@ -14,6 +14,7 @@ public class AccountScreen : BaseScreen
     public GameObject ContentAchivement;
     public Transform PrefabAchivement;
 
+
     public event Action<string, Sprite> OnSubmit;
 
     public override void Start()
@@ -22,13 +23,16 @@ public class AccountScreen : BaseScreen
         EmptyAchivement.SetActive(true);
         ContentAchivement.SetActive(false);
         InputName.onValueChanged.AddListener(OnInputValueChanged);
-        MobileGameServices.OnAuthenticated += MobileGameServices_OnAuthenticated;
     }
 
-    private void MobileGameServices_OnAuthenticated()
+    private void LoadAchievements()
     {
         MobileGameServices.Instance.LoadAchievements((datas) =>
         {
+            for (int i = ContentAchivement.transform.childCount - 1; i >= 0; i--)
+            {
+                EZ_Pooling.EZ_PoolManager.Despawn(ContentAchivement.transform.GetChild(i));
+            }
             if (datas != null && datas.Count > 0)
             {
                 EmptyAchivement.SetActive(false);
@@ -43,6 +47,7 @@ public class AccountScreen : BaseScreen
                     tf.localScale = Vector3.one;
 
                     AchievementItem item = tf.GetComponent<AchievementItem>();
+                    item.UpdateData(data);
                 }
             }
             else
@@ -56,6 +61,8 @@ public class AccountScreen : BaseScreen
     private void OnInputValueChanged(string value)
     {
         ButtonSubmit.interactable = value.Trim().Length >= 4;
+
+        InactiveScreen.Instance.Hide();
     }
 
     public void Submit()
@@ -105,6 +112,11 @@ public class AccountScreen : BaseScreen
         InputName.SetTextWithoutNotify(UserInfo.Instance.Name.text);
         Avatar.sprite = UserInfo.Instance.Avatar.sprite;
         pushNotification.CheckPermission();
+
+        if (MobileGameServices.Instance.IsReady())
+        {
+            LoadAchievements();
+        }
     }
 
     public override void Hide()

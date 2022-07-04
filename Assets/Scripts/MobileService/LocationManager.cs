@@ -12,6 +12,7 @@ public class LocationManager : MonoBehaviour
     public string Province;
     public string Address;
     private bool ischecked = false;
+    private string lastProvince;
 
     public Action<string, string> OnLocation_Updated = delegate { };
 
@@ -62,8 +63,12 @@ public class LocationManager : MonoBehaviour
 
     void UpdateLocation()
     {
-        OnLocation_Updated?.Invoke(Address, Province);
-        EventManager.Instance.Publish(GameEvent.DoUnlockProvince, Province);
+        if (lastProvince != Province)
+        {
+            lastProvince = Province;
+            OnLocation_Updated?.Invoke(Address, Province);
+            EventManager.Instance.Publish(GameEvent.DoUnlockProvince, Province);
+        }
     }
 
     void SetCallback()

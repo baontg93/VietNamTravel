@@ -11,6 +11,8 @@ public class CongratScreen : BaseScreen
     {
         base.Show();
 
+        InactiveScreen.Instance.Hide();
+
         if (tween != null) tween.Kill();
         tween = DOVirtual.DelayedCall(3f, () =>
         {

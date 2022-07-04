@@ -116,5 +116,7 @@ public class MapScreen : MonoBehaviour
         MobileStorage.SetObject(StogrageKey.USER_UNLOCKED_DATA, UnlockedData);
         FocusOn(province);
         OnProvinceUnlocked(province);
+
+        MobileGameServices.Instance.SetScore(UnlockedData.Provinces.Count);
     }
 }

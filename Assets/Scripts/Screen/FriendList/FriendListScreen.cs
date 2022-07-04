@@ -18,6 +18,12 @@ public class FriendListScreen : BaseScreen
         {
             friendDatas = Random();
         }
+
+        for (int i = ListContainer.childCount - 1; i >= 0; i--)
+        {
+            EZ_Pooling.EZ_PoolManager.Despawn(ListContainer.GetChild(i));
+        }
+
         foreach (var item in friendDatas)
         {
             Transform tf = EZ_Pooling.EZ_PoolManager.Spawn(PrefabItem);

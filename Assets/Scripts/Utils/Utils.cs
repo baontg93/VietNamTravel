@@ -103,7 +103,7 @@ public static class Utils
     /// <param name="action"></param>
     public static void RegisterEventTrigger(this Button button, EventTriggerType eventTriggerType, System.Action action)
     {
-        EventTrigger eventTrigger = button.GetComponent<EventTrigger>();
+        EventTrigger eventTrigger = button.GetOrAddComponent<EventTrigger>();
         EventTrigger.Entry entry = new();
         entry.eventID = eventTriggerType;
         entry.callback.AddListener((baseEventData) =>

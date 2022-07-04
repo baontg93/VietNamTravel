@@ -2482,7 +2482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 247800817697893059, guid: d8f7499572d19f9439a5d56b4c4e7734, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 247800817697893059, guid: d8f7499572d19f9439a5d56b4c4e7734, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3321,7 +3321,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Ch\u01B0a \u0111\u1EA1t \u0111\u01B0\u1EE3c th\xE0nh t\u1EF1 n\xE0o"
+  m_text: "Ch\u01B0a \u0111\u1EA1t \u0111\u01B0\u1EE3c th\xE0nh t\xEDch n\xE0o"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4309,7 +4309,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Th\xE0nh t\u1EF1u"
+  m_text: "Th\xE0nh t\xEDch"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5576,8 +5576,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 693915211}
   - {fileID: 2144509191}
+  - {fileID: 693915211}
   m_Father: {fileID: 910507604}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6470,7 +6470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1782987236
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8621,7 +8621,7 @@ RectTransform:
   - {fileID: 1790168633}
   - {fileID: 1950085120}
   m_Father: {fileID: 1563256709}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InactiveScreen : MonoBehaviour
+public class InactiveScreen : SingletonBehaviour<InactiveScreen>
 {
     public GameObject Content;
     float activeDuration = 10;

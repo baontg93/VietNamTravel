@@ -9,6 +9,11 @@ public class MobileGameServices : SingletonBehaviour<MobileGameServices>
     public static event Action OnAuthenticated;
     private readonly Dictionary<string, AchievementData> achievementDescriptions = new();
 
+    public bool IsReady()
+    {
+        return GameServices.IsAuthenticated;
+    }
+
     private void Awake()
     {
         GameServices.Authenticate();
@@ -52,6 +57,8 @@ public class MobileGameServices : SingletonBehaviour<MobileGameServices>
                                 data.Title = description1.Title;
                                 data.Sprite = textureData.GetTexture().GetSprite();
                                 achievementDescriptions.TAdd(description1.Id, data);
+
+                                Debug.Log("- data: " + JsonUtility.ToJson(data));
                             }
                         });
                     }
@@ -79,6 +86,8 @@ public class MobileGameServices : SingletonBehaviour<MobileGameServices>
                 Debug.Log("Request to submit score failed with error: " + error.Description);
             }
         });
+
+        SetAchievement(score);
     }
 
     public void SetAchievement(int score)
@@ -134,8 +143,12 @@ public class MobileGameServices : SingletonBehaviour<MobileGameServices>
                 for (int iter = 0; iter < achievements.Length; iter++)
                 {
                     var achievement1 = achievements[iter];
-                    achievementDescriptions.TryGetValue(achievement1.Id, out AchievementData data);
-                    datas.Add(data);
+                    if(achievementDescriptions.ContainsKey(achievement1.Id))
+                    {
+                        AchievementData data = achievementDescriptions[achievement1.Id];
+                        datas.Add(data);
+                        Debug.Log($"achievement {achievement1.Id}: " + JsonUtility.ToJson(data));
+                    }
                 }
 
             }
@@ -172,6 +185,7 @@ public class MobileGameServices : SingletonBehaviour<MobileGameServices>
                 if (result.Scores.Length > 0)
                 {
                     datas = new();
+                    int counter = 0;
                     foreach (IScore score in result.Scores)
                     {
 
@@ -186,15 +200,23 @@ public class MobileGameServices : SingletonBehaviour<MobileGameServices>
                                     Avatar = textureData.GetTexture().GetSprite()
                                 };
                                 datas.Add(user);
+                                counter++;
+                                if (counter == result.Scores.Length)
+                                {
+                                    onComplete?.Invoke(datas);
+                                }
                             }
                         });
                     }
 
                 }
+                else
+                {
+                    onComplete?.Invoke(datas);
+                }
 
             }
 
-            onComplete?.Invoke(datas);
         });
     }
 }

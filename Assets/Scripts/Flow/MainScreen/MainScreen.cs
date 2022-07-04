@@ -57,6 +57,9 @@ public class MainScreen : MonoBehaviour
         if (!mapScreen.UnlockedData.IsUnlocked(province))
         {
             mapScreen.UnlockProvince(province);
+        } else
+        {
+            mapScreen.FocusOn(province);
         }
     }
 
