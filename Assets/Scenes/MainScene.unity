@@ -3733,6 +3733,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabPoolOptions:
+  - prefabTransform: {fileID: 8659939209767393146, guid: cc945cb78d3494885845c3e6d25048cf, type: 3}
+    instancesToPreload: 10
+    isPoolExpanded: 1
+    showDebugLog: 0
+    poolCanGrow: 1
+    cullDespawned: 0
+    cullAbove: 10
+    cullDelay: 2
+    cullAmount: 1
+    enableHardLimit: 1
+    hardLimit: 100
+    recycle: 0
   - prefabTransform: {fileID: 3094297268105215389, guid: a314c7dceff29d342893f5581bbb49b9, type: 3}
     instancesToPreload: 10
     isPoolExpanded: 1

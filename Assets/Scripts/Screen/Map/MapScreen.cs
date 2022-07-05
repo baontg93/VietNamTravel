@@ -39,7 +39,7 @@ public class MapScreen : MonoBehaviour
         ResetCam(false);
     }
 
-    private void CheckingMap_OnDataSetted(Dictionary<string, Transform> dictProvinces)
+    private void CheckingMap_OnDataSetted(Dictionary<string, MapItem> dictProvinces)
     {
         ScriptableProvince.Init(JsonFile.text, dictProvinces);
     }
@@ -75,6 +75,13 @@ public class MapScreen : MonoBehaviour
     private void MobileCloudServices_OnJoinGame(JoinGameData obj)
     {
         UnlockedData = obj.UnlockedData;
+
+        for (int i = 0; i < UnlockedData.Provinces.Count; i++)
+        {
+            UnlockedProvince province = UnlockedData.Provinces[i];
+            ScriptableProvince.SetCheckedData(province.Name, province.Time);
+            CheckingMap.SetChecked(ScriptableProvince.GetProvince(province.Name).MapItem);
+        }
     }
 
     public void GameReady()
@@ -113,6 +120,9 @@ public class MapScreen : MonoBehaviour
             return;
         }
         UnlockedData.Unlock(province);
+        ScriptableProvince.SetCheckedData(province, UnlockedData.GetUnlockTime(province));
+        CheckingMap.SetChecked(ScriptableProvince.GetProvince(province).MapItem);
+
         MobileStorage.SetObject(StogrageKey.USER_UNLOCKED_DATA, UnlockedData);
         FocusOn(province);
         OnProvinceUnlocked(province);

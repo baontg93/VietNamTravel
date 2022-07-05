@@ -1404,6 +1404,7 @@ MonoBehaviour:
   - {fileID: 265102235439369752}
   - {fileID: 9010761670651512020}
   tempCamTransform: {fileID: 0}
+  PrefabFlag: {fileID: 8659939209767393146, guid: cc945cb78d3494885845c3e6d25048cf, type: 3}
   MaterialDefault: {fileID: 2100000, guid: 154bfd553512857438ba39895d8cc20d, type: 2}
   MaterialChecking: {fileID: 2100000, guid: ae839eb4aebee8543b963deedf6bf7ac, type: 2}
   MaterialChecked: {fileID: 2100000, guid: cf816f0a8398e4b469ae689487166867, type: 2}

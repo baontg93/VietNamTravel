@@ -14,9 +14,10 @@ public class SpecificCamPos
 
 public class VietNamMap : MonoBehaviour
 {
-    public event Action<Dictionary<string, Transform>> OnDataSetted = delegate { };
+    public event Action<Dictionary<string, MapItem>> OnDataSetted = delegate { };
     public Transform[] Provinces;
     public Transform tempCamTransform;
+    public Transform PrefabFlag;
     public Material MaterialDefault;
     public Material MaterialChecking;
     public Material MaterialChecked;
@@ -27,8 +28,8 @@ public class VietNamMap : MonoBehaviour
 
     private Vector3 defaultCamPos;
     private Quaternion defaultCamRotation;
-    private Dictionary<string, Transform> dictProvinces;
-    private Transform currentTF;
+    private Dictionary<string, MapItem> dictProvinces;
+    private MapItem currentItem;
     private bool isCamDataSetted = false;
 
     private void Start()
@@ -54,7 +55,6 @@ public class VietNamMap : MonoBehaviour
         {
             Transform province = Provinces[i];
             temp.Add(province.name.ToLower(), province);
-            SetMaterial(province, MaterialDefault);
         }
 
         dictProvinces = new();
@@ -65,8 +65,25 @@ public class VietNamMap : MonoBehaviour
                 string key = item.Key[i].ToLower();
                 if (temp.ContainsKey(key))
                 {
-                    dictProvinces.Add(item.Value, temp[key]);
+                    MapItem mapItem = temp[key].GetOrAddComponent<MapItem>();
+                    mapItem.Name = item.Value;
                     temp[key].name = item.Value;
+
+                    Vector3 pos = LocalPosOfCam;
+                    Vector3 mainLandpos = Vector3.zero;
+                    for (int index = 0; index < specificCamPos.Length; index++)
+                    {
+                        if (mapItem.transform == specificCamPos[index].Transform)
+                        {
+                            pos = specificCamPos[index].Position;
+                            mainLandpos = specificCamPos[index].MainLandPosition;
+                            break;
+                        }
+                    }
+
+                    mapItem.Initialize(item.Value, mainLandpos, pos);
+                    dictProvinces.Add(item.Value, mapItem);
+                    SetMaterial(mapItem, MaterialDefault);
                     break;
                 }
             }
@@ -95,9 +112,9 @@ public class VietNamMap : MonoBehaviour
             Location.gameObject.SetActive(false);
         }
 
-        if (currentTF != null)
+        if (currentItem != null && !currentItem.IsChecked)
         {
-            SetMaterial(currentTF, MaterialDefault);
+            SetMaterial(currentItem, MaterialDefault);
         }
     }
 
@@ -113,50 +130,59 @@ public class VietNamMap : MonoBehaviour
         Debug.Log("Camera is focusing on " + province);
 
         gameObject.SetActive(true);
-        SetMaterial(currentTF, MaterialDefault);
-
-        Transform tf = dictProvinces[province];
-        if (tf != null)
+        if (currentItem != null && !currentItem.IsChecked)
         {
-            currentTF = tf;
-            SetMaterial(currentTF, MaterialChecking);
-            CameraFocus(currentTF);
+            SetMaterial(currentItem, MaterialDefault);
+        }
+
+        MapItem item = dictProvinces[province];
+        if (item != null)
+        {
+            currentItem = item;
+            if (currentItem != null && !currentItem.IsChecked)
+            {
+                SetMaterial(currentItem, MaterialChecking);
+            }
+            CameraFocus(currentItem);
         }
     }
 
-    void SetMaterial(Transform tf, Material material)
+    public void SetChecked(MapItem item)
     {
-        if (tf == null)
+        if (item == null)
         {
             return;
         }
-        MeshRenderer mesh = tf.GetComponent<MeshRenderer>();
-        mesh.material = material;
-        for (int i = 0; i < tf.childCount; i++)
+        SetMaterial(item, MaterialChecked);
+        Transform flag = EZ_Pooling.EZ_PoolManager.Spawn(PrefabFlag);
+        flag.SetParent(item.transform);
+        flag.gameObject.SetActive(true);
+        flag.localScale = Vector3.one;
+        flag.localPosition = item.PosMainLane;
+    }
+
+    void SetMaterial(MapItem item, Material material)
+    {
+        if (item == null)
         {
-            mesh = tf.GetChild(i).GetComponent<MeshRenderer>();
-            if (mesh != null)
+            return;
+        }
+        MeshRenderer mesh = item.GetComponent<MeshRenderer>();
+        mesh.material = material;
+        for (int i = 0; i < item.transform.childCount; i++)
+        {
+            if (item.transform.GetChild(i).TryGetComponent(out mesh))
             {
                 mesh.material = material;
             }
         }
     }
 
-    void CameraFocus(Transform target)
+    void CameraFocus(MapItem target)
     {
-        Vector3 pos = LocalPosOfCam;
-        Vector3 mainLandpos = Vector3.zero;
-        for (int i = 0; i < specificCamPos.Length; i++)
-        {
-            if (target == specificCamPos[i].Transform)
-            {
-                pos = specificCamPos[i].Position;
-                mainLandpos = specificCamPos[i].MainLandPosition;
-                break;
-            }
-        }
-        tempCamTransform.position = target.TransformPoint(pos);
-        tempCamTransform.LookAt(target.position);
+        Transform tf = target.transform;
+        tempCamTransform.position = tf.TransformPoint(target.PosCamView);
+        tempCamTransform.LookAt(tf.position);
         Vector3 euler = tempCamTransform.localEulerAngles;
         euler.x += 7;
         tempCamTransform.localEulerAngles = euler;
@@ -165,9 +191,15 @@ public class VietNamMap : MonoBehaviour
 
         if (Location != null)
         {
-            Location.gameObject.SetActive(true);
-            Location.SetParent(currentTF);
-            Location.localPosition = mainLandpos;
+            if (!target.IsChecked)
+            {
+                Location.gameObject.SetActive(true);
+                Location.SetParent(tf);
+                Location.localPosition = target.PosMainLane;
+            } else
+            {
+                Location.gameObject.SetActive(false);
+            }
         }
     }
 

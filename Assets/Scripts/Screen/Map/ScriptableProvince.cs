@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class ScriptableProvince : ScriptableObject
     public List<Province> ListProvinces;
     public Dictionary<string, Province> ProvinceData;
 
-    public void Init(string jsonData, Dictionary<string, Transform> tfOfProvince)
+    public void Init(string jsonData, Dictionary<string, MapItem> mapItems)
     {
         ListProvinces = new List<Province>();
         ProvinceData = new();
@@ -17,7 +16,8 @@ public class ScriptableProvince : ScriptableObject
         {
             Province province = provinceData.Provinces[i];
             string name = ProvincesParser.GetProvince(province.Name);
-            province.Transform = tfOfProvince[name];
+            province.MapItem = mapItems[name];
+            province.Transform = mapItems[name].transform;
             ProvinceData.Add(name, province);
             ListProvinces.Add(province);
         }
@@ -26,5 +26,11 @@ public class ScriptableProvince : ScriptableObject
     public Province GetProvince(string name)
     {
         return ProvinceData[name];
+    }
+
+    public void SetCheckedData(string name, string checkedDate)
+    {
+        Province province = GetProvince(name);
+        province.MapItem.SetChecked(true, checkedDate);
     }
 }

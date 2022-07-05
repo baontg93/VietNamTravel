@@ -140,6 +140,7 @@ public class Province : PlaceData
 {
     public List<District> Districts = new();
     public Transform Transform;
+    public MapItem MapItem;
 
     public Province(object input) : base(input)
     {
