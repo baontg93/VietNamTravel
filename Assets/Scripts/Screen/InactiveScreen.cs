@@ -10,21 +10,21 @@ public class InactiveScreen : SingletonBehaviour<InactiveScreen>
         Hide();
     }
 
-    void FixedUpdate()
-    {
-        if (Input.touchCount >= 1)
-        {
-            Hide();
-        }
+    //void FixedUpdate()
+    //{
+    //    if (Input.touchCount >= 1)
+    //    {
+    //        Hide();
+    //    }
 
-        if (activeDuration <= 0)
-        {
-            Content.SetActive(true);
-        } else
-        {
-            activeDuration -= Time.deltaTime;
-        }
-    }
+    //    if (activeDuration <= 0)
+    //    {
+    //        Content.SetActive(true);
+    //    } else
+    //    {
+    //        activeDuration -= Time.deltaTime;
+    //    }
+    //}
 
     public void Hide()
     {
