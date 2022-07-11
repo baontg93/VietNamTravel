@@ -130,16 +130,16 @@ public class VietNamMap : MonoBehaviour
         Debug.Log("Camera is focusing on " + province);
 
         gameObject.SetActive(true);
-        if (currentItem != null && !currentItem.IsChecked)
+        if (currentItem != null)
         {
-            SetMaterial(currentItem, MaterialDefault);
+            SetMaterial(currentItem, currentItem.IsChecked ? MaterialChecked : MaterialDefault);
         }
 
         MapItem item = dictProvinces[province];
         if (item != null)
         {
             currentItem = item;
-            if (currentItem != null && !currentItem.IsChecked)
+            if (currentItem != null)
             {
                 SetMaterial(currentItem, MaterialChecking);
             }

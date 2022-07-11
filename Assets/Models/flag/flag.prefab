@@ -87,6 +87,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4905406307931550752, guid: 4c814d23284d643e5997544838766c92, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cb941a237847f44dc8e290a92d5a3d3d, type: 2}
     - target: {fileID: 919132149155446097, guid: 4c814d23284d643e5997544838766c92, type: 3}
       propertyPath: m_Name
       value: model_flag
@@ -97,22 +101,27 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: cb941a237847f44dc8e290a92d5a3d3d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c814d23284d643e5997544838766c92, type: 3}
---- !u!1 &363531342925235612 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3029032871660112297, guid: 4c814d23284d643e5997544838766c92, type: 3}
+--- !u!4 &6302658001208431648 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4c814d23284d643e5997544838766c92, type: 3}
   m_PrefabInstance: {fileID: 5835877258345067467}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &6300486635538637658
+--- !u!1 &6646286809380490906 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4c814d23284d643e5997544838766c92, type: 3}
+  m_PrefabInstance: {fileID: 5835877258345067467}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &9017031925646757904
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 363531342925235612}
+  m_GameObject: {fileID: 6646286809380490906}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2d73397213ad94b6186818f1bdd1455e, type: 2}
+  m_Controller: {fileID: 9100000, guid: a80298fca1bbb4ac1aa87e212138796e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -122,8 +131,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!4 &6302658001208431648 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4c814d23284d643e5997544838766c92, type: 3}
-  m_PrefabInstance: {fileID: 5835877258345067467}
-  m_PrefabAsset: {fileID: 0}
